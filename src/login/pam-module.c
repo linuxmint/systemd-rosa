@@ -581,9 +581,18 @@ _public_ PAM_EXTERN int pam_sm_open_session(
                         pam_syslog(handle, LOG_ERR, "Failed to set runtime dir.");
                         goto finish;
                 }
-        } else if (debug) {
+        } else {
+            if (uid == 0) {
+                r = pam_misc_setenv(handle, "XDG_RUNTIME_DIR", "/run/user/0", 0);
+                if (r != PAM_SUCCESS) {
+                        pam_syslog(handle, LOG_ERR, "Failed to set runtime dir for UID 0.");
+                        goto finish;
+                }
+            }
+            else if (debug) {
                 pam_syslog(handle, LOG_DEBUG, "Runtime dir %s is not owned by the target uid %u, ignoring.",
                            runtime_path, uid);
+            }
         }
 
         if (!isempty(seat)) {
