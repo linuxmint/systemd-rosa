@@ -1,0 +1,176 @@
+diff --git a/src/core/dbus-socket.c b/src/core/dbus-socket.c
+index 77d98ea..973f905 100644
+--- a/src/core/dbus-socket.c
++++ b/src/core/dbus-socket.c
+@@ -205,7 +205,7 @@ DBusHandlerResult bus_socket_message_handler(Unit *u, DBusConnection *c, DBusMes
+                 { "org.freedesktop.systemd1.Socket", bus_socket_properties,       s },
+                 { "org.freedesktop.systemd1.Socket", bus_exec_context_properties, &s->exec_context },
+                 { "org.freedesktop.systemd1.Socket", bus_kill_context_properties, &s->kill_context },
+-                { "org.freedesktop.systemd1.Socket", bus_unit_properties,         u },
++                { "org.freedesktop.systemd1.Socket", bus_unit_cgroup_properties,  u },
+                 { NULL, }
+         };
+ 
+diff --git a/src/core/manager.c b/src/core/manager.c
+index c7f8f20..0508628 100644
+--- a/src/core/manager.c
++++ b/src/core/manager.c
+@@ -1372,7 +1372,7 @@ static int manager_process_signal_fd(Manager *m) {
+ 
+                 case SIGINT:
+                         if (m->running_as == SYSTEMD_SYSTEM) {
+-                                manager_start_target(m, SPECIAL_CTRL_ALT_DEL_TARGET, JOB_REPLACE);
++                                manager_start_target(m, SPECIAL_CTRL_ALT_DEL_TARGET, JOB_REPLACE_IRREVERSIBLY);
+                                 break;
+                         }
+ 
+diff --git a/src/initctl/initctl.c b/src/initctl/initctl.c
+index 735f1e1..5fbce4a 100644
+--- a/src/initctl/initctl.c
++++ b/src/initctl/initctl.c
+@@ -122,7 +122,7 @@ static void change_runlevel(Server *s, int runlevel) {
+         if (isolate)
+                 mode = "isolate";
+         else
+-                mode = "replace";
++                mode = "replace-irreversibly";
+ 
+         log_debug("Running request %s/start/%s", target, mode);
+ 
+diff --git a/src/journal/journald-server.c b/src/journal/journald-server.c
+index cc52b8a..01f23ce 100644
+--- a/src/journal/journald-server.c
++++ b/src/journal/journald-server.c
+@@ -227,9 +227,11 @@ void server_fix_perms(Server *s, JournalFile *f, uid_t uid) {
+                 }
+         }
+ 
+-        /* We do not recalculate the mask here, so that the fchmod() mask above stays intact. */
++        /* We do not recalculate the mask unconditionally here,
++         * so that the fchmod() mask above stays intact. */
+         if (acl_get_permset(entry, &permset) < 0 ||
+-            acl_add_perm(permset, ACL_READ) < 0) {
++            acl_add_perm(permset, ACL_READ) < 0 ||
++            calc_acl_mask_if_needed(&acl) < 0) {
+                 log_warning("Failed to patch ACL on %s, ignoring: %m", f->path);
+                 goto finish;
+         }
+diff --git a/src/shared/acl-util.c b/src/shared/acl-util.c
+index 48bb12f..fb04e49 100644
+--- a/src/shared/acl-util.c
++++ b/src/shared/acl-util.c
+@@ -69,6 +69,34 @@ int acl_find_uid(acl_t acl, uid_t uid, acl_entry_t *entry) {
+         return 0;
+ }
+ 
++int calc_acl_mask_if_needed(acl_t *acl_p) {
++        acl_entry_t i;
++        int found;
++
++        assert(acl_p);
++
++        for (found = acl_get_entry(*acl_p, ACL_FIRST_ENTRY, &i);
++             found > 0;
++             found = acl_get_entry(*acl_p, ACL_NEXT_ENTRY, &i)) {
++
++                acl_tag_t tag;
++
++                if (acl_get_tag_type(i, &tag) < 0)
++                        return -errno;
++
++                if (tag == ACL_MASK)
++                        return 0;
++        }
++
++        if (found < 0)
++                return -errno;
++
++        if (acl_calc_mask(acl_p) < 0)
++                return -errno;
++
++        return 0;
++}
++
+ int search_acl_groups(char*** dst, const char* path, bool* belong) {
+         acl_t acl;
+ 
+diff --git a/src/shared/acl-util.h b/src/shared/acl-util.h
+index 23090d9..36ef490 100644
+--- a/src/shared/acl-util.h
++++ b/src/shared/acl-util.h
+@@ -24,4 +24,5 @@
+ #include <stdbool.h>
+ 
+ int acl_find_uid(acl_t acl, uid_t uid, acl_entry_t *entry);
++int calc_acl_mask_if_needed(acl_t *acl_p);
+ int search_acl_groups(char*** dst, const char* path, bool* belong);
+diff --git a/src/shared/polkit.c b/src/shared/polkit.c
+index cea7074..1c5e9e3 100644
+--- a/src/shared/polkit.c
++++ b/src/shared/polkit.c
+@@ -38,12 +38,8 @@ int verify_polkit(
+ 
+ #ifdef ENABLE_POLKIT
+         DBusMessage *m = NULL, *reply = NULL;
+-        const char *unix_process = "unix-process", *pid = "pid", *starttime = "start-time", *cancel_id = "";
++        const char *system_bus_name = "system-bus-name", *name = "name", *cancel_id = "";
+         uint32_t flags = interactive ? 1 : 0;
+-        pid_t pid_raw;
+-        uint32_t pid_u32;
+-        unsigned long long starttime_raw;
+-        uint64_t starttime_u64;
+         DBusMessageIter iter_msg, iter_struct, iter_array, iter_dict, iter_variant;
+         int r;
+         dbus_bool_t authorized = FALSE, challenge = FALSE;
+@@ -68,14 +64,6 @@ int verify_polkit(
+ 
+ #ifdef ENABLE_POLKIT
+ 
+-        pid_raw = bus_get_unix_process_id(c, sender, error);
+-        if (pid_raw == 0)
+-                return -EINVAL;
+-
+-        r = get_starttime_of_pid(pid_raw, &starttime_raw);
+-        if (r < 0)
+-                return r;
+-
+         m = dbus_message_new_method_call(
+                         "org.freedesktop.PolicyKit1",
+                         "/org/freedesktop/PolicyKit1/Authority",
+@@ -86,22 +74,13 @@ int verify_polkit(
+ 
+         dbus_message_iter_init_append(m, &iter_msg);
+ 
+-        pid_u32 = (uint32_t) pid_raw;
+-        starttime_u64 = (uint64_t) starttime_raw;
+-
+         if (!dbus_message_iter_open_container(&iter_msg, DBUS_TYPE_STRUCT, NULL, &iter_struct) ||
+-            !dbus_message_iter_append_basic(&iter_struct, DBUS_TYPE_STRING, &unix_process) ||
++            !dbus_message_iter_append_basic(&iter_struct, DBUS_TYPE_STRING, &system_bus_name) ||
+             !dbus_message_iter_open_container(&iter_struct, DBUS_TYPE_ARRAY, "{sv}", &iter_array) ||
+             !dbus_message_iter_open_container(&iter_array, DBUS_TYPE_DICT_ENTRY, NULL, &iter_dict) ||
+-            !dbus_message_iter_append_basic(&iter_dict, DBUS_TYPE_STRING, &pid) ||
+-            !dbus_message_iter_open_container(&iter_dict, DBUS_TYPE_VARIANT, "u", &iter_variant) ||
+-            !dbus_message_iter_append_basic(&iter_variant, DBUS_TYPE_UINT32, &pid_u32) ||
+-            !dbus_message_iter_close_container(&iter_dict, &iter_variant) ||
+-            !dbus_message_iter_close_container(&iter_array, &iter_dict) ||
+-            !dbus_message_iter_open_container(&iter_array, DBUS_TYPE_DICT_ENTRY, NULL, &iter_dict) ||
+-            !dbus_message_iter_append_basic(&iter_dict, DBUS_TYPE_STRING, &starttime) ||
+-            !dbus_message_iter_open_container(&iter_dict, DBUS_TYPE_VARIANT, "t", &iter_variant) ||
+-            !dbus_message_iter_append_basic(&iter_variant, DBUS_TYPE_UINT64, &starttime_u64) ||
++            !dbus_message_iter_append_basic(&iter_dict, DBUS_TYPE_STRING, &name) ||
++            !dbus_message_iter_open_container(&iter_dict, DBUS_TYPE_VARIANT, "s", &iter_variant) ||
++            !dbus_message_iter_append_basic(&iter_variant, DBUS_TYPE_STRING, &sender) ||
+             !dbus_message_iter_close_container(&iter_dict, &iter_variant) ||
+             !dbus_message_iter_close_container(&iter_array, &iter_dict) ||
+             !dbus_message_iter_close_container(&iter_struct, &iter_array) ||
+diff --git a/units/systemd-tmpfiles-setup-dev.service.in b/units/systemd-tmpfiles-setup-dev.service.in
+index f029285..764da01 100644
+--- a/units/systemd-tmpfiles-setup-dev.service.in
++++ b/units/systemd-tmpfiles-setup-dev.service.in
+@@ -14,4 +14,5 @@ ConditionCapability=CAP_MKNOD
+ 
+ [Service]
+ Type=oneshot
++RemainAfterExit=yes
+ ExecStart=@rootbindir@/systemd-tmpfiles --prefix=/dev --create

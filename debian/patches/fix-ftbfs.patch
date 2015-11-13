@@ -1,0 +1,13 @@
+Description: Fix FTBFS against recent kernels & glibc.
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+--- systemd-204.orig/src/core/socket.c
++++ systemd-204/src/core/socket.c
+@@ -29,6 +29,7 @@
+ #include <arpa/inet.h>
+ #include <mqueue.h>
+ #ifdef HAVE_XATTR
++#include <sys/xattr.h>
+ #include <attr/xattr.h>
+ #endif
+ 

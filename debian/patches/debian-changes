@@ -1,0 +1,4847 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ systemd (204-5) unstable; urgency=high
+ .
+   * Cherry-pick 72fd713 from upstream which fixes insecure calling of polkit
+     by avoiding a race condition in scraping /proc (CVE-2013-4327).
+     Closes: #723713
+Author: Michael Biebl <biebl@debian.org>
+Bug-Debian: http://bugs.debian.org/723713
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ systemd-204/.dir-locals.el
+@@ -0,0 +1,7 @@
++; Sets emacs variables based on mode.
++; A list of (major-mode . ((var1 . value1) (var2 . value2)))
++; Mode can be nil, which gives default values.
++
++((nil . ((indent-tabs-mode . nil)
++         (tab-width . 8)))
++)
+--- /dev/null
++++ systemd-204/.mailmap
+@@ -0,0 +1,62 @@
++Kay Sievers <kay@vrfy.org>
++Kay Sievers <kay@vrfy.org> <kay.sievers@vrfy.org>
++Kay Sievers <kay@vrfy.org> <kay.sievers@suse.de>
++Kay Sievers <kay@vrfy.org> <kay@pim.off.vrfy.org>
++Kay Sievers <kay@vrfy.org> <kay@pim>
++Greg KH <greg@kroah.com>
++Greg KH <greg@kroah.com> <greg@kroah.com>
++Greg KH <greg@kroah.com> <greg@press.(none)>
++Greg KH <greg@kroah.com> <gregkh@suse.de>
++Greg KH <greg@kroah.com> <greg@bucket.kroah.org>
++Harald Hoyer <harald@redhat.com>
++David Zeuthen <david@fubar.dk>
++David Zeuthen <david@fubar.dk> <davidz@redhat.com>
++David Zeuthen <david@fubar.dk> <zeuthen@gmail.com>
++Hannes Reinecke <hare@suse.de>
++Scott James Remnant <scott@netsplit.com>
++Scott James Remnant <scott@netsplit.com>  <scott@ubuntu.com>
++Alan Jenkins <alan.christopher.jenkins@googlemail.com>
++Alan Jenkins <alan.christopher.jenkins@googlemail.com> <alan-jenkins@tuffmail.co.uk>
++Marco d'Itri <md@linux.it> <md@Linux.IT>
++Robert Gerus <ar@bash.org.pl> Robert "arachnist" Gerus <ar@bash.org.pl>
++Fabiano Fidêncio <fabianofidencio@gmail.com> Fabiano Fidencio <fidencio@profusion.mobi>
++Martin Pitt <martinpitt@gnome.org>
++Martin Pitt <martinpitt@gnome.org> <martin.pitt@ubuntu.com>
++Daniel J Walsh <dwalsh@redhat.com>
++Dave Reisner <dreisner@archlinux.org> <d@falconindy.com>
++Diego Elio Pettenò <flameeyes@gmail.com>
++Daniel Elstner  <daniel.kitta@gmail.com> <danielk@openismus.com>
++Frederic Crozat <fcrozat@suse.com> <fcrozat@mandriva.com>
++Ian Campbell <ijc@hellion.org.uk> <Ian.Campbell@citrix.com>
++Jerone Young <jyoung@redhat.com> <jerone.young@canonical.com>
++Luis Felipe Strano Moraes <luis.strano@gmail.com> <lfelipe@profusion.mobi>
++Mario Limonciello <mario_limonciello@dell.com> <Mario_Limonciello@dell.com>
++Matthias Clasen <mclasen@redhat.com> <matthias.clasen@gmail.com>
++Michal Soltys <soltys@ziu.info> <nozo@ziu.info>
++Piter PUNK <piterpunk@slackware.com> <piterpk@terra.com.br>
++Richard Hughes <richard@hughsie.com> <hughsient@gmail.com>
++Robby Workman <rw@rlworkman.net> <rworkman@slackware.com>
++Shawn Landden <shawnlandden@gmail.com>
++Simon Peeters <peeters.simon@gmail.com>
++Tobias Klauser <tklauser@distanz.ch> <tklauser@nuerscht.ch>
++Miklos Vajna <vmiklos@frugalware.org> <vmiklos@gmail.com>
++William Jon McCann <jmccann@redhat.com> <william.jon.mccann@gmail.com>
++Yin Kangkai <kangkai.yin@intel.com> <kangkai.yin@linux.intel.com>
++Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
++Lennart Poettering <lennart@poettering.net> <lennart@bf9bc1cc-28ce-0310-abfb-9041aa761afb>
++Ananth N Mavinakayanahalli <ananth@in.ibm.com>
++Ananth N Mavinakayanahalli <ananth@in.ibm.com> <ananthmg@rediffmail.com>
++Ted Ts'o <tytso@mit.edu>
++Tobias Klauser <tklauser@access.unizh.ch>
++Tobias Klauser <tklauser@access.unizh.ch> <tklauser@access.unizh.chbk>
++Tobias Klauser <tklauser@access.unizh.ch> <klauser@access.unizh.ch>
++Patrick Mansfield <patmans@us.ibm.com>
++Christophe Varoqui <christophe.varoqui@free.fr>
++Daniel Stekloff <dsteklof@us.ibm.com>
++Michael Buesch <mbuesch@freenet.de>
++Olaf Hering <olh@suse.de>
++Robert Love <rml@tech9.net>
++Arnd Bergmann <arnd@arndb.de>
++Tom Rini <trini@kernel.crashing.org>
++Paul Mundt <lethal@linux-sh.org>
++Atul Sabharwal <atul.sabharwal@intel.com>
+--- /dev/null
++++ systemd-204/.vimrc
+@@ -0,0 +1,4 @@
++" 'set exrc' in ~/.vimrc will read .vimrc from the current directory
++set tabstop=8
++set shiftwidth=8
++set expandtab
+--- /dev/null
++++ systemd-204/CODING_STYLE
+@@ -0,0 +1,123 @@
++
++- 8ch indent, no tabs
++
++- Variables and functions *must* be static, unless they have a
++  protoype, and are supposed to be exported.
++
++- structs in MixedCase, variables + functions in lower_case
++
++- The destructors always unregister the object from the next bigger
++  object, not the other way around
++
++- To minimize strict aliasing violations we prefer unions over casting
++
++- For robustness reasons destructors should be able to destruct
++  half-initialized objects, too
++
++- Error codes are returned as negative Exxx. i.e. return -EINVAL. There
++  are some exceptions: for constructors its is OK to return NULL on
++  OOM. For lookup functions NULL is fine too for "not found".
++
++  Be strict with this. When you write a function that can fail due to
++  more than one cause, it *really* should have "int" as return value
++  for the error code.
++
++- Don't bother with error checking if writing to stdout/stderr worked.
++
++- Do not log errors from "library" code, only do so from "main
++  program" code.
++
++- Always check OOM. There's no excuse. In program code you can use
++  "log_oom()" for then printing a short message.
++
++- Do not issue NSS requests (that includes user name and host name
++  lookups) from the main daemon as this might trigger deadlocks when
++  those lookups involve synchronously talking to services that we
++  would need to start up
++
++- Don't synchronously talk to any other service, due to risk of
++  deadlocks
++
++- Avoid fixed sized string buffers, unless you really know the maximum
++  size and that maximum size is small. They are a source of errors,
++  since they result in strings to be truncated. Often it is nicer to
++  use dynamic memory, or alloca(). If you do allocate fixed size
++  strings on the stack, then it's probably only OK if you either use a
++  maximum size such as LINE_MAX, or count in detail the maximum size a
++  string can have. Or in other words, if you use "char buf[256]" then
++  you are likely doing something wrong!
++
++- Stay uniform. For example, always use "usec_t" for time
++  values. Don't usec mix msec, and usec and whatnot.
++
++- Make use of _cleanup_free_ and friends. It makes your code much
++  nicer to read!
++
++- Be exceptionally careful when formatting and parsing floating point
++  numbers. Their syntax is locale dependent (i.e. "5.000" in en_US is
++  generally understood as 5, while on de_DE as 5000.).
++
++- Try to use this:
++
++      void foo() {
++      }
++
++  instead of this:
++
++      void foo()
++      {
++      }
++
++  But it's OK if you don't.
++
++- Don't write "foo ()", write "foo()".
++
++- Please use streq() and strneq() instead of strcmp(), strncmp() where applicable.
++
++- Please do not allocate variables on the stack in the middle of code,
++  even if C99 allows it. Wrong:
++
++  {
++          a = 5;
++          int b;
++          b = a;
++  }
++
++  Right:
++
++  {
++          int b;
++          a = 5;
++          b = a;
++  }
++
++- Unless you allocate an array, "double" is always the better choice
++  than "float". Processors speak "double" natively anyway, so this is
++  no speed benefit, and on calls like printf() "float"s get upgraded
++  to "double"s anyway, so there is no point.
++
++- Don't invoke functions when you allocate variables on the stack. Wrong:
++
++  {
++          int a = foobar();
++          uint64_t x = 7;
++  }
++
++  Right:
++
++  {
++          int a;
++          uint64_t x = 7;
++
++          a = foobar();
++  }
++
++- Use "goto" for cleaning up, and only use it for that. i.e. you may
++  only jump to the end of a function, and little else.
++
++- Think about the types you use. If a value cannot sensibly be
++  negative don't use "int", but use "unsigned".
++
++- Don't use types like "short". They *never* make sense. Use ints,
++  longs, long longs, all in unsigned+signed fashion, and the fixed
++  size types uint32_t and so on, but nothing else.
+--- systemd-204.orig/Makefile.am
++++ systemd-204/Makefile.am
+@@ -404,6 +404,7 @@ dist_systemunit_DATA = \
+ 	units/quotaon.service \
+ 	units/systemd-ask-password-wall.path \
+ 	units/systemd-ask-password-console.path \
++	units/syslog.target \
+ 	units/systemd-udevd-control.socket \
+ 	units/systemd-udevd-kernel.socket \
+ 	units/system-update.target \
+@@ -2087,7 +2088,7 @@ INSTALL_DATA_HOOKS += \
+ 	hwdb-update-hook
+ 
+ hwdb-remove-hook:
+-	-test -n "$(DESTDIR)" || rm -f /etc/udev/hwdb.bin
++	-test -n "$(DESTDIR)" || rm -f $(udevlibexecdir)/hwdb.bin
+ 
+ # ------------------------------------------------------------------------------
+ TESTS += \
+@@ -2353,15 +2354,6 @@ typelibs_DATA = \
+ CLEANFILES += $(gir_DATA) $(typelibs_DATA)
+ endif # HAVE_INTROSPECTION
+ 
+-# move lib from $(libdir) to $(rootlibdir) and update devel link, if needed
+-libgudev-install-hook:
+-	libname=libgudev-1.0.so && $(move-to-rootlibdir)
+-
+-libgudev-uninstall-hook:
+-	rm -f $(DESTDIR)$(rootlibdir)/libgudev-1.0.so*
+-
+-INSTALL_EXEC_HOOKS += libgudev-install-hook
+-UNINSTALL_EXEC_HOOKS += libgudev-uninstall-hook
+ endif
+ 
+ EXTRA_DIST += \
+--- /dev/null
++++ systemd-204/autogen.sh
+@@ -0,0 +1,67 @@
++#!/bin/sh
++
++#  This file is part of systemd.
++#
++#  systemd is free software; you can redistribute it and/or modify it
++#  under the terms of the GNU Lesser General Public License as published by
++#  the Free Software Foundation; either version 2.1 of the License, or
++#  (at your option) any later version.
++#
++#  systemd is distributed in the hope that it will be useful, but
++#  WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++#  Lesser General Public License for more details.
++#
++#  You should have received a copy of the GNU Lesser General Public License
++#  along with systemd; If not, see <http://www.gnu.org/licenses/>.
++
++set -e
++
++if [ -f .git/hooks/pre-commit.sample ] && [ ! -f .git/hooks/pre-commit ]; then
++        # This part is allowed to fail
++        cp -p .git/hooks/pre-commit.sample .git/hooks/pre-commit && \
++        chmod +x .git/hooks/pre-commit && \
++        echo "Activated pre-commit hook." || :
++fi
++
++if which gtkdocize >/dev/null 2>/dev/null; then
++        gtkdocize --docdir docs/
++        gtkdocargs=--enable-gtk-doc
++else
++        echo "You don't have gtk-doc installed, and thus won't be able to generate the documentation."
++        rm -f docs/gtk-doc.make
++        echo 'EXTRA_DIST =' > docs/gtk-doc.make
++fi
++
++intltoolize --force --automake
++autoreconf --force --install --symlink
++
++libdir() {
++        echo $(cd "$1/$(gcc -print-multi-os-directory)"; pwd)
++}
++
++args="\
++--sysconfdir=/etc \
++--localstatedir=/var \
++--libdir=$(libdir /usr/lib) \
++$gtkdocargs"
++
++if [ ! -L /bin ]; then
++args="$args \
++--with-rootprefix= \
++--with-rootlibdir=$(libdir /lib) \
++"
++fi
++
++if [ "x$1" = "xc" ]; then
++        ./configure CFLAGS='-g -O0' $args
++        make clean
++else
++        echo
++        echo "----------------------------------------------------------------"
++        echo "Initialized build system. For a common configuration please run:"
++        echo "----------------------------------------------------------------"
++        echo
++        echo "./configure CFLAGS='-g -O0' $args"
++        echo
++fi
+--- systemd-204.orig/configure.ac
++++ systemd-204/configure.ac
+@@ -64,12 +64,12 @@ AC_PROG_GCC_TRADITIONAL
+ AC_PATH_PROG([M4], [m4])
+ AC_PATH_PROG([XSLTPROC], [xsltproc])
+ 
+-AC_PATH_PROG([QUOTAON], [quotaon], [/usr/sbin/quotaon])
+-AC_PATH_PROG([QUOTACHECK], [quotacheck], [/usr/sbin/quotacheck])
++AC_PATH_PROG([QUOTAON], [quotaon], [/sbin/quotaon])
++AC_PATH_PROG([QUOTACHECK], [quotacheck], [/sbin/quotacheck])
+ 
+-AC_PATH_PROG([SETCAP], [setcap], [/usr/sbin/setcap])
++AC_PATH_PROG([SETCAP], [setcap], [/sbin/setcap])
+ 
+-AC_PATH_PROG([KILL], [kill], [/usr/bin/kill])
++AC_PATH_PROG([KILL], [kill], [/bin/kill])
+ 
+ # gtkdocize greps for '^GTK_DOC_CHECK', so it needs to be on its own line
+ m4_ifdef([GTK_DOC_CHECK], [
+@@ -680,13 +680,13 @@ AC_ARG_WITH(kbd-loadkeys,
+         AS_HELP_STRING([--with-kbd-loadkeys=PATH],
+                 [Path to loadkeys]),
+         [KBD_LOADKEYS="$withval"],
+-        [KBD_LOADKEYS="/usr/bin/loadkeys"])
++        [KBD_LOADKEYS="/bin/loadkeys"])
+ 
+ AC_ARG_WITH(kbd-setfont,
+         AS_HELP_STRING([--with-kbd-setfont=PATH],
+                 [Path to setfont]),
+         [KBD_SETFONT="$withval"],
+-        [KBD_SETFONT="/usr/bin/setfont"])
++        [KBD_SETFONT="/bin/setfont"])
+ 
+ AC_DEFINE_UNQUOTED(KBD_LOADKEYS, ["$KBD_LOADKEYS"], [Path of loadkeys])
+ AC_DEFINE_UNQUOTED(KBD_SETFONT, ["$KBD_SETFONT"], [Path of setfont])
+--- /dev/null
++++ systemd-204/hwdb/ids-update.pl
+@@ -0,0 +1,270 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++
++sub usb_vendor {
++        my $vendor;
++
++        open(IN, "<", "usb.ids");
++        open(OUT, ">", "20-usb-vendor-model.hwdb");
++        print(OUT "# This file is part of systemd.\n" .
++                  "#\n" .
++                  "# Data imported from: http://www.linux-usb.org/usb.ids\n");
++
++        while (my $line = <IN>) {
++                $line =~ s/\s+$//;
++                $line =~ m/^([0-9a-f]{4})\s*(.+)$/;
++                if (defined $1) {
++                        $vendor = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "usb:v" . $vendor . "*\n");
++                        print(OUT " ID_VENDOR_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                $line =~ m/^\t([0-9a-f]{4})\s*(.+)$/;
++                if (defined $1) {
++                        my $model = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "usb:v" . $vendor . "p" . $model . "*\n");
++                        print(OUT " ID_MODEL_FROM_DATABASE=" . $text . "\n");
++                }
++        }
++
++        close(IN);
++        close(OUT);
++}
++
++sub usb_classes {
++        my $class;
++        my $subclass;
++        my $protocol;
++
++        open(IN, "<", "usb.ids");
++        open(OUT, ">", "20-usb-classes.hwdb");
++        print(OUT "# This file is part of systemd.\n" .
++                  "#\n" .
++                  "# Data imported from: http://www.linux-usb.org/usb.ids\n");
++
++        while (my $line = <IN>) {
++                $line =~ s/\s+$//;
++
++                $line =~ m/^C\ ([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $class = uc $1;
++                        if ($class =~ m/^00$/) {
++                                next;
++                        }
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "usb:v*p*d*dc" . $class . "*\n");
++                        print(OUT " ID_USB_CLASS_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                if (not defined $class) {
++                        next;
++                } elsif ($line =~ m/^$/) {
++                        last;
++                }
++
++                $line =~ m/^\t([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $subclass = uc $1;
++                        if ($subclass =~ m/^00$/) {
++                                next;
++                        }
++                        my $text = $2;
++                        if ($text =~ m/^(\?|None|Unused)$/) {
++                                next;
++                        }
++                        print(OUT "\n");
++                        print(OUT "usb:v*p*d*dc" . $class . "dsc" . $subclass . "*\n");
++                        print(OUT " ID_USB_SUBCLASS_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                $line =~ m/^\t\t([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $protocol = uc $1;
++                        my $text = $2;
++                        if ($text =~ m/^(\?|None|Unused)$/) {
++                                next;
++                        }
++                        print(OUT "\n");
++                        print(OUT "usb:v*p*d*dc" .  $class . "dsc" . $subclass . "dp" . $protocol . "*\n");
++                        print(OUT " ID_USB_PROTOCOL_FROM_DATABASE=" . $text . "\n");
++                }
++        }
++
++        close(IN);
++        close(OUT);
++}
++
++sub pci_vendor {
++        my $vendor;
++        my $device;
++
++        open(IN, "<", "pci.ids");
++        open(OUT, ">", "20-pci-vendor-model.hwdb");
++        print(OUT "# This file is part of systemd.\n" .
++                  "#\n" .
++                  "# Data imported from: http://pci-ids.ucw.cz/v2.2/pci.ids\n");
++
++        while (my $line = <IN>) {
++                $line =~ s/\s+$//;
++                $line =~ m/^([0-9a-f]{4})\s*(.+)$/;
++
++                if (defined $1) {
++                        $vendor = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "pci:v0000" . $vendor . "*\n");
++                        print(OUT " ID_VENDOR_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                $line =~ m/^\t([0-9a-f]{4})\s*(.+)$/;
++                if (defined $1) {
++                        $device = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "pci:v0000" . $vendor . "d0000" . $device . "*\n");
++                        print(OUT " ID_MODEL_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                $line =~ m/^\t\t([0-9a-f]{4})\s*([0-9a-f]{4})\s*(.*)$/;
++                if (defined $1) {
++                        my $sub_vendor = uc $1;
++                        my $sub_device = uc $2;
++                        my $text = $3;
++                        print(OUT "\n");
++                        print(OUT "pci:v0000" . $vendor . "d0000" . $device . "sv0000" . $sub_vendor . "sd0000" . $sub_device . "*\n");
++                        print(OUT " ID_MODEL_FROM_DATABASE=" . $text . "\n");
++                }
++        }
++
++        close(IN);
++        close(OUT);
++}
++
++sub pci_classes {
++        my $class;
++        my $subclass;
++        my $interface;
++
++        open(IN, "<", "pci.ids");
++        open(OUT, ">", "20-pci-classes.hwdb");
++        print(OUT "# This file is part of systemd.\n" .
++                  "#\n" .
++                  "# Data imported from: http://pci-ids.ucw.cz/v2.2/pci.ids\n");
++
++        while (my $line = <IN>) {
++                $line =~ s/\s+$//;
++
++                $line =~ m/^C\ ([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $class = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "pci:v*d*sv*sd*bc" . $class . "*\n");
++                        print(OUT " ID_PCI_CLASS_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                if (not defined $class) {
++                        next;
++                } elsif ($line =~ m/^$/) {
++                        last;
++                }
++
++                $line =~ m/^\t([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $subclass = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "pci:v*d*sv*sd*bc" . $class . "sc" . $subclass . "*\n");
++                        print(OUT " ID_PCI_SUBCLASS_FROM_DATABASE=" . $text . "\n");
++                        next;
++                }
++
++                $line =~ m/^\t\t([0-9a-f]{2})\s*(.+)$/;
++                if (defined $1) {
++                        $interface = uc $1;
++                        my $text = $2;
++                        print(OUT "\n");
++                        print(OUT "pci:v*d*sv*sd*bc" .  $class . "sc" . $subclass . "i" . $interface . "*\n");
++                        print(OUT " ID_PCI_INTERFACE_FROM_DATABASE=" . $text . "\n");
++                }
++        }
++
++        close(IN);
++        close(OUT);
++}
++
++sub oui {
++        my $iab_prefix;
++        my %iab_prefixes = ();
++
++        open(OUT, ">", "20-OUI.hwdb");
++        print(OUT "# This file is part of systemd.\n" .
++                  "#\n" .
++                  "# Data imported from:\n" .
++                  "#   http://standards.ieee.org/develop/regauth/oui/oui.txt\n" .
++                  "#   http://standards.ieee.org/develop/regauth/iab/iab.txt\n");
++
++        open(IN, "<", "iab.txt");
++        while (my $line = <IN>) {
++                $line =~ s/^ +//;
++                $line =~ s/\s+$//;
++                $line =~ m/^([0-9A-F]{2})-([0-9A-F]{2})-([0-9A-F]{2})\s*\(hex\)\s*.+$/;
++                if (defined $1) {
++                        $iab_prefix = $1 . $2 . $3;
++                        $iab_prefixes{ $iab_prefix } = 1;
++                        next;
++                }
++
++                $line =~ m/^([0-9A-F]{3})000-\g1FFF\s*\(base 16\)\s*(.+)$/;
++                if (defined $1) {
++                        my $vendor = uc $1;
++                        my $text = $2;
++
++                        print(OUT "\n");
++                        print(OUT "OUI:" . $iab_prefix . $vendor . "*\n");
++                        print(OUT " ID_OUI_FROM_DATABASE=" . $text . "\n");
++                }
++        }
++        close(IN);
++
++        open(IN, "<", "oui.txt");
++        while (my $line = <IN>) {
++                $line =~ s/^ +//;
++                $line =~ s/\s+$//;
++                $line =~ m/^([0-9A-F]{6})\s*\(base 16\)\s*(.+)$/;
++                if (defined $1) {
++                        my $vendor = uc $1;
++                        my $text = $2;
++
++                        # skip the IAB prefixes
++                        if (! exists $iab_prefixes{ $vendor }) {
++                                print(OUT "\n");
++                                print(OUT "OUI:" . $vendor . "*\n");
++                                print(OUT " ID_OUI_FROM_DATABASE=" . $text . "\n");
++                        }
++                }
++        }
++        close(IN);
++        close(OUT);
++}
++
++usb_vendor();
++usb_classes();
++
++pci_vendor();
++pci_classes();
++
++oui();
+--- /dev/null
++++ systemd-204/make-man-rules.py
+@@ -0,0 +1,101 @@
++#  -*- Mode: python; coding: utf-8; indent-tabs-mode: nil -*- */
++#
++#  This file is part of systemd.
++#
++#  Copyright 2013 Zbigniew Jędrzejewski-Szmek
++#
++#  systemd is free software; you can redistribute it and/or modify it
++#  under the terms of the GNU Lesser General Public License as published by
++#  the Free Software Foundation; either version 2.1 of the License, or
++#  (at your option) any later version.
++#
++#  systemd is distributed in the hope that it will be useful, but
++#  WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++#  Lesser General Public License for more details.
++#
++#  You should have received a copy of the GNU Lesser General Public License
++#  along with systemd; If not, see <http://www.gnu.org/licenses/>.
++
++from __future__ import print_function
++import collections
++import sys
++from xml_helper import *
++
++SECTION = '''\
++MANPAGES += \\
++	{manpages}
++MANPAGES_ALIAS += \\
++	{aliases}
++{rules}
++{htmlrules}
++'''
++
++CONDITIONAL = '''\
++if {conditional}
++''' \
+++ SECTION + \
++'''\
++endif
++'''
++
++HEADER = '''\
++# Do not edit. Generated by make-man-rules.py.
++# Regenerate with 'make all update-man-list'.
++
++'''
++
++HTML_ALIAS_RULE = '''\
++{}.html: {}.html
++	$(html-alias)
++'''
++
++def man(page, number):
++    return 'man/{}.{}'.format(page, number)
++
++def add_rules(rules, name):
++    xml = xml_parse(name)
++    # print('parsing {}'.format(name), file=sys.stderr)
++    conditional = xml.getroot().get('conditional') or ''
++    rulegroup = rules[conditional]
++    refmeta = xml.find('./refmeta')
++    title = refmeta.find('./refentrytitle').text
++    number = refmeta.find('./manvolnum').text
++    refnames = xml.findall('./refnamediv/refname')
++    target = man(refnames[0].text, number)
++    if title != refnames[0].text:
++        raise ValueError('refmeta and refnamediv disagree: ' + name)
++    for refname in refnames:
++        assert all(refname not in group
++                   for group in rules.values()), "duplicate page name"
++        alias = man(refname.text, number)
++        rulegroup[alias] = target
++        # print('{} => {} [{}]'.format(alias, target, conditional), file=sys.stderr)
++
++def create_rules(*xml_files):
++    " {conditional => {alias-name => source-name}} "
++    rules = collections.defaultdict(dict)
++    for name in xml_files:
++        add_rules(rules, name)
++    return rules
++
++def mjoin(files):
++    return ' \\\n\t'.join(sorted(files) or '#')
++
++def make_makefile(rules):
++    return HEADER + '\n'.join(
++        (CONDITIONAL if conditional else SECTION).format(
++            manpages=mjoin(set(rulegroup.values())),
++            aliases=mjoin(k for k,v in rulegroup.items() if k != v),
++            rules='\n'.join('{}: {}'.format(k,v)
++                            for k,v in sorted(rulegroup.items())
++                            if k != v),
++            htmlrules='\n'.join(HTML_ALIAS_RULE.format(k[:-2],v[:-2])
++                                for k,v in sorted(rulegroup.items())
++                                if k != v),
++            conditional=conditional)
++        for conditional,rulegroup in sorted(rules.items()))
++
++if __name__ == '__main__':
++    rules = create_rules(*sys.argv[1:])
++    print(make_makefile(rules), end='')
+--- systemd-204.orig/man/systemd.mount.xml
++++ systemd-204/man/systemd.mount.xml
+@@ -141,7 +141,7 @@
+                 <filename>local-fs.target</filename> or
+                 <filename>remote-fs.target</filename>, depending
+                 whether the file system is local or remote. If
+-                <option>x-systemd.automount</option> is set, an
++                <option>comment=systemd.automount</option> is set, an
+                 automount unit will be created for the file
+                 system. See
+                 <citerefentry><refentrytitle>systemd.automount</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+--- systemd-204.orig/man/systemd.special.xml
++++ systemd-204/man/systemd.special.xml
+@@ -97,6 +97,7 @@
+                 <filename>swap.target</filename>,
+                 <filename>sysinit.target</filename>,
+                 <filename>syslog.socket</filename>,
++                <filename>syslog.target</filename>,
+                 <filename>system-update.target</filename>,
+                 <filename>time-sync.target</filename>,
+                 <filename>timers.target</filename>,
+@@ -363,6 +364,27 @@
+                                         that have the
+                                         <option>auto</option> mount
+                                         option set.</para>
++
++                                        <para>systemd automatically
++                                        adds dependencies of type
++                                        After for this target unit to
++                                        all SysV init script service
++                                        units with an LSB header
++                                        referring to the
++                                        <literal>$local_fs</literal>
++                                        facility.</para>
++                                </listitem>
++                        </varlistentry>
++                        <varlistentry>
++                                <term><filename>local-fs-pre.target</filename></term>
++                                <listitem>
++                                        <para>This target unit is
++                                        automatically ordered before
++                                        all local mount points marked
++                                        with <option>auto</option>
++                                        (see above). It can be used to
++                                        execute certain units before
++                                        all local mounts.</para>
+                                 </listitem>
+                         </varlistentry>
+                         <varlistentry>
+@@ -671,6 +693,19 @@
+                                 </listitem>
+                         </varlistentry>
+                         <varlistentry>
++                                <term><filename>syslog.target</filename></term>
++                                <listitem>
++                                        <para>systemd automatically
++                                        adds dependencies of type
++                                        After for this target unit to
++                                        all SysV init script service
++                                        units with an LSB header
++                                        referring to the
++                                        <literal>$syslog</literal>
++                                        facility.</para>
++                                </listitem>
++                        </varlistentry>
++                        <varlistentry>
+                                 <term><filename>system-update.target</filename></term>
+                                 <listitem>
+                                         <para>A special target unit
+--- systemd-204.orig/man/udevadm.xml
++++ systemd-204/man/udevadm.xml
+@@ -424,13 +424,13 @@
+     </refsect2>
+ 
+     <refsect2><title>udevadm hwdb <optional>options</optional></title>
+-      <para>Maintain the hardware database index in <filename>/etc/udev/hwdb.bin</filename>.</para>
++      <para>Maintain the hardware database index in <filename>/lib/udev/hwdb.bin</filename>.</para>
+       <variablelist>
+         <varlistentry>
+           <term><option>--update</option></term>
+           <listitem>
+-            <para>Compile the hardware database information located in /usr/lib/udev/hwdb.d/,
+-            /etc/udev/hwdb.d/ and store it in <filename>/etc/udev/hwdb.bin</filename>. This should be done after
++            <para>Compile the hardware database information located in /lib/udev/hwdb.d/,
++            /etc/udev/hwdb.d/ and store it in <filename>/lib/udev/hwdb.bin</filename>. This should be done after
+             any update to the source files; it will not be called automatically. The running
+             udev daemon will detect a new database on its own and does not need to be
+             notified about it.</para>
+--- /dev/null
++++ systemd-204/po/pl.po
+@@ -0,0 +1,391 @@
++# translation of pl.po to Polish
++# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2013.
++# Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>, 2011.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: systemd\n"
++"Report-Msgid-Bugs-To: \n"
++"POT-Creation-Date: 2013-01-12 19:29+0100\n"
++"PO-Revision-Date: 2013-01-12 19:30+0100\n"
++"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
++"Language-Team: Polish <trans-pl@lists.fedoraproject.org>\n"
++"Language: pl\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:1
++msgid "Set host name"
++msgstr "Ustawienie nazwy komputera"
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:2
++msgid "Authentication is required to set the local host name."
++msgstr "Wymagane jest uwierzytelnienie, aby ustawić nazwę lokalnego komputera."
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:3
++msgid "Set static host name"
++msgstr "Ustawienie statycznej nazwy komputera"
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:4
++msgid ""
++"Authentication is required to set the statically configured local host name, "
++"as well as the pretty host name."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby ustawić statycznie skonfigurowaną nazwę "
++"lokalnego komputera, a także jego ładną nazwę."
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:5
++msgid "Set machine information"
++msgstr "Ustawienie informacji o komputerze"
++
++#: ../src/hostname/org.freedesktop.hostname1.policy.in.h:6
++msgid "Authentication is required to set local machine information."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby ustawić informacje o lokalnym komputerze."
++
++#: ../src/locale/org.freedesktop.locale1.policy.in.h:1
++msgid "Set system locale"
++msgstr "Ustawienie lokalizacji systemu"
++
++#: ../src/locale/org.freedesktop.locale1.policy.in.h:2
++msgid "Authentication is required to set the system locale."
++msgstr "Wymagane jest uwierzytelnienie, aby ustawić lokalizację systemu."
++
++#: ../src/locale/org.freedesktop.locale1.policy.in.h:3
++msgid "Set system keyboard settings"
++msgstr "Ustawienie klawiatury systemu"
++
++#: ../src/locale/org.freedesktop.locale1.policy.in.h:4
++msgid "Authentication is required to set the system keyboard settings."
++msgstr "Wymagane jest uwierzytelnienie, aby ustawić klawiaturę systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:1
++msgid "Allow applications to inhibit system shutdown"
++msgstr "Zezwolenie programom na wstrzymywanie wyłączenia systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:2
++msgid ""
++"Authentication is required to allow an application to inhibit system "
++"shutdown."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"wyłączenia systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:3
++msgid "Allow applications to delay system shutdown"
++msgstr "Zezwolenie programom na opóźnienie wyłączenia systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:4
++msgid ""
++"Authentication is required to allow an application to delay system shutdown."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na opóźnienie "
++"wyłączenia systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:5
++msgid "Allow applications to inhibit system sleep"
++msgstr "Zezwolenie programom na wstrzymanie uśpienia systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:6
++msgid ""
++"Authentication is required to allow an application to inhibit system sleep."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"uśpienia systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:7
++msgid "Allow applications to delay system sleep"
++msgstr "Zezwolenie programom na opóźnienie uśpienia systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:8
++msgid ""
++"Authentication is required to allow an application to delay system sleep."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na opóźnienie "
++"uśpienia systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:9
++msgid "Allow applications to inhibit automatic system suspend"
++msgstr "Zezwolenie programom na wstrzymanie automatycznego uśpienia systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:10
++msgid ""
++"Authentication is required to allow an application to inhibit automatic "
++"system suspend."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"automatycznego uśpienia systemu."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:11
++msgid "Allow applications to inhibit system handling of the power key"
++msgstr ""
++"Zezwolenie programom na wstrzymanie obsługi klawisza zasilania przez system"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:12
++msgid ""
++"Authentication is required to allow an application to inhibit system "
++"handling of the power key."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"obsługi klawisza zasilania przez system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:13
++msgid "Allow applications to inhibit system handling of the suspend key"
++msgstr ""
++"Zezwolenie programom na wstrzymanie obsługi klawisza uśpienia przez system"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:14
++msgid ""
++"Authentication is required to allow an application to inhibit system "
++"handling of the suspend key."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"obsługi klawisza uśpienia przez system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:15
++msgid "Allow applications to inhibit system handling of the hibernate key"
++msgstr ""
++"Zezwolenie programom na wstrzymanie obsługi klawisza hibernacji przez system"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:16
++msgid ""
++"Authentication is required to allow an application to inhibit system "
++"handling of the hibernate key."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"obsługi klawisza hibernacji przez system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:17
++msgid "Allow applications to inhibit system handling of the lid switch"
++msgstr ""
++"Zezwolenie programom na wstrzymanie obsługi przełącznika pokrywy przez system"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:18
++msgid ""
++"Authentication is required to allow an application to inhibit system "
++"handling of the lid switch."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić programowi na wstrzymanie "
++"obsługi przełącznika pokrywy przez system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:19
++msgid "Allow non-logged-in users to run programs"
++msgstr "Zezwolenie niezalogowanym użytkownikom na uruchamianie programów"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:20
++msgid ""
++"Authentication is required to allow a non-logged-in user to run programs."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zezwolić niezalogowanemu użytkownikowi "
++"na uruchamianie programów."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:21
++msgid "Allow attaching devices to seats"
++msgstr "Zezwolenie na podłączanie urządzeń do stanowisk"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:22
++msgid "Authentication is required for attaching a device to a seat."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby podłączyć urządzenie do stanowiska."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:23
++msgid "Flush device to seat attachments"
++msgstr "Usunięcie podłączenia urządzeń do stanowisk"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:24
++msgid ""
++"Authentication is required for resetting how devices are attached to seats."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby ponownie ustawić sposób podłączenia "
++"urządzeń do stanowisk."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:25
++msgid "Power off the system"
++msgstr "Wyłączenie systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:26
++msgid "Authentication is required for powering off the system."
++msgstr "Wymagane jest uwierzytelnienie, aby wyłączyć system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:27
++msgid "Power off the system while other users are logged in"
++msgstr "Wyłączenie systemu, kiedy są zalogowani inni użytkownicy"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:28
++msgid ""
++"Authentication is required for powering off the system while other users are "
++"logged in."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby wyłączyć system, kiedy są zalogowani "
++"inni użytkownicy."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:29
++msgid "Power off the system while an application asked to inhibit it"
++msgstr "Wyłączenie systemu, kiedy program zażądał jego wstrzymania"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:30
++msgid ""
++"Authentication is required for powering off the system while an application "
++"asked to inhibit it."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby wyłączyć system, kiedy program zażądał "
++"jego wstrzymania."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:31
++msgid "Reboot the system"
++msgstr "Ponowne uruchomienie systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:32
++msgid "Authentication is required for rebooting the system."
++msgstr "Wymagane jest uwierzytelnienie, aby ponownie uruchomić system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:33
++msgid "Reboot the system while other users are logged in"
++msgstr "Ponowne uruchomienie systemu, kiedy są zalogowani inni użytkownicy"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:34
++msgid ""
++"Authentication is required for rebooting the system while other users are "
++"logged in."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby ponownie uruchomić system, kiedy są "
++"zalogowani inni użytkownicy."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:35
++msgid "Reboot the system while an application asked to inhibit it"
++msgstr ""
++"Ponowne uruchomienie systemu, kiedy program poprosił o jego wstrzymanie"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:36
++msgid ""
++"Authentication is required for rebooting the system while an application "
++"asked to inhibit it."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby ponownie uruchomić system, kiedy program "
++"zażądał jego wstrzymania."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:37
++msgid "Suspend the system"
++msgstr "Uśpienie systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:38
++msgid "Authentication is required for suspending the system."
++msgstr "Wymagane jest uwierzytelnienie, aby uśpić system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:39
++msgid "Suspend the system while other users are logged in"
++msgstr "Uśpienie systemu, kiedy są zalogowani inni użytkownicy"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:40
++msgid ""
++"Authentication is required for suspending the system while other users are "
++"logged in."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby uśpić system, kiedy są zalogowani inni "
++"użytkownicy."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:41
++msgid "Suspend the system while an application asked to inhibit it"
++msgstr "Uśpienie systemu, kiedy program poprosił o jego wstrzymanie"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:42
++msgid ""
++"Authentication is required for suspending the system while an application "
++"asked to inhibit it."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby uśpić system, kiedy program zażądał jego "
++"wstrzymania."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:43
++msgid "Hibernate the system"
++msgstr "Hibernacja systemu"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:44
++msgid "Authentication is required for hibernating the system."
++msgstr "Wymagane jest uwierzytelnienie, aby zahibernować system."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:45
++msgid "Hibernate the system while other users are logged in"
++msgstr "Hibernacja systemu, kiedy są zalogowani inni użytkownicy"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:46
++msgid ""
++"Authentication is required for hibernating the system while other users are "
++"logged in."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zahibernować system, kiedy są zalogowani "
++"inni użytkownicy."
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:47
++msgid "Hibernate the system while an application asked to inhibit it"
++msgstr "Hibernacja systemu, kiedy program zażądał jej wstrzymania"
++
++#: ../src/login/org.freedesktop.login1.policy.in.h:48
++msgid ""
++"Authentication is required for hibernating the system while an application "
++"asked to inhibit it."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby zahibernować system, kiedy program "
++"zażądał jej wstrzymania."
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:1
++msgid "Set system time"
++msgstr "Ustawienie czasu systemu"
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:2
++msgid "Authentication is required to set the system time."
++msgstr "Wymagane jest uwierzytelnienie, aby ustawić czas systemu."
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:3
++msgid "Set system timezone"
++msgstr "Ustawienie strefy czasowej systemu"
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:4
++msgid "Authentication is required to set the system timezone."
++msgstr "Wymagane jest uwierzytelnienie, aby ustawić strefę czasową systemu."
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:5
++msgid "Set RTC to local timezone or UTC"
++msgstr "Ustawienie RTC na lokalną strefę czasową lub strefę UTC"
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:6
++msgid ""
++"Authentication is required to control whether the RTC stores the local or "
++"UTC time."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby kontrolować, czy RTC przechowuje czas "
++"lokalny lub czas UTC."
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:7
++msgid "Turn network time synchronization on or off"
++msgstr "Włączenie lub wyłączenie synchronizacji czasu przez sieć"
++
++#: ../src/timedate/org.freedesktop.timedate1.policy.in.h:8
++msgid ""
++"Authentication is required to control whether network time synchronization "
++"shall be enabled."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby kontrolować, czy włączyć synchronizację "
++"czasu przez sieć."
++
++#: ../src/core/org.freedesktop.systemd1.policy.in.in.h:1
++msgid "Send passphrase back to system"
++msgstr "Wysłanie hasła z powrotem do systemu"
++
++#: ../src/core/org.freedesktop.systemd1.policy.in.in.h:2
++msgid ""
++"Authentication is required to send the entered passphrase back to the system."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby wysłać podane hasło z powrotem do "
++"systemu."
++
++#: ../src/core/org.freedesktop.systemd1.policy.in.in.h:3
++msgid "Privileged system and service manager access"
++msgstr "Uprawniony dostęp do menedżera systemu i usług"
++
++#: ../src/core/org.freedesktop.systemd1.policy.in.in.h:4
++msgid "Authentication is required to access the system and service manager."
++msgstr ""
++"Wymagane jest uwierzytelnienie, aby uzyskać dostęp do menedżera systemu i "
++"usług."
+--- systemd-204.orig/rules/80-net-name-slot.rules
++++ systemd-204/rules/80-net-name-slot.rules
+@@ -5,7 +5,7 @@ SUBSYSTEM!="net", GOTO="net_name_slot_en
+ NAME!="", GOTO="net_name_slot_end"
+ 
+ IMPORT{cmdline}="net.ifnames"
+-ENV{net.ifnames}=="0", GOTO="net_name_slot_end"
++ENV{net.ifnames}!="1", GOTO="net_name_slot_end"
+ 
+ NAME=="", ENV{ID_NET_NAME_ONBOARD}!="", NAME="$env{ID_NET_NAME_ONBOARD}"
+ NAME=="", ENV{ID_NET_NAME_SLOT}!="", NAME="$env{ID_NET_NAME_SLOT}"
+--- systemd-204.orig/rules/99-systemd.rules.in
++++ systemd-204/rules/99-systemd.rules.in
+@@ -6,6 +6,7 @@
+ #  (at your option) any later version.
+ 
+ ACTION=="remove", GOTO="systemd_end"
++TEST!="/sys/fs/cgroup/systemd", GOTO="systemd_end"
+ 
+ SUBSYSTEM=="tty", KERNEL=="tty[a-zA-Z]*|hvc*|xvc*|hvsi*", TAG+="systemd"
+ 
+--- /dev/null
++++ systemd-204/src/Makefile
+@@ -0,0 +1,28 @@
++#  This file is part of systemd.
++#
++#  Copyright 2010 Lennart Poettering
++#
++#  systemd is free software; you can redistribute it and/or modify it
++#  under the terms of the GNU Lesser General Public License as published by
++#  the Free Software Foundation; either version 2.1 of the License, or
++#  (at your option) any later version.
++#
++#  systemd is distributed in the hope that it will be useful, but
++#  WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
++#  Lesser General Public License for more details.
++#
++#  You should have received a copy of the GNU Lesser General Public License
++#  along with systemd; If not, see <http://www.gnu.org/licenses/>.
++
++# This file is a dirty trick to simplify compilation from within
++# emacs. This file is not intended to be distributed. So, don't touch
++# it, even better ignore it!
++
++all:
++	$(MAKE) -C ..
++
++clean:
++	$(MAKE) -C .. clean
++
++.PHONY: all clean
+--- systemd-204.orig/src/core/locale-setup.c
++++ systemd-204/src/core/locale-setup.c
+@@ -117,6 +117,27 @@ int locale_setup(void) {
+                         log_warning("Failed to read /etc/locale.conf: %s", strerror(-r));
+         }
+ 
++        if (r <= 0 &&
++            (r = parse_env_file("/etc/default/locale", NEWLINE,
++                                "LANG",              &variables[VARIABLE_LANG],
++                                "LC_CTYPE",          &variables[VARIABLE_LC_CTYPE],
++                                "LC_NUMERIC",        &variables[VARIABLE_LC_NUMERIC],
++                                "LC_TIME",           &variables[VARIABLE_LC_TIME],
++                                "LC_COLLATE",        &variables[VARIABLE_LC_COLLATE],
++                                "LC_MONETARY",       &variables[VARIABLE_LC_MONETARY],
++                                "LC_MESSAGES",       &variables[VARIABLE_LC_MESSAGES],
++                                "LC_PAPER",          &variables[VARIABLE_LC_PAPER],
++                                "LC_NAME",           &variables[VARIABLE_LC_NAME],
++                                "LC_ADDRESS",        &variables[VARIABLE_LC_ADDRESS],
++                                "LC_TELEPHONE",      &variables[VARIABLE_LC_TELEPHONE],
++                                "LC_MEASUREMENT",    &variables[VARIABLE_LC_MEASUREMENT],
++                                "LC_IDENTIFICATION", &variables[VARIABLE_LC_IDENTIFICATION],
++                                NULL)) < 0) {
++
++                if (r != -ENOENT)
++                        log_warning("Failed to read /etc/default/locale: %s", strerror(-r));
++        }
++
+         if (!variables[VARIABLE_LANG]) {
+                 variables[VARIABLE_LANG] = strdup("C");
+                 if (!variables[VARIABLE_LANG]) {
+--- systemd-204.orig/src/core/manager.c
++++ systemd-204/src/core/manager.c
+@@ -874,6 +874,8 @@ int manager_startup(Manager *m, FILE *se
+ int manager_add_job(Manager *m, JobType type, Unit *unit, JobMode mode, bool override, DBusError *e, Job **_ret) {
+         int r;
+         Transaction *tr;
++        Job *j;
++        Iterator i;
+ 
+         assert(m);
+         assert(type < _JOB_TYPE_MAX);
+@@ -885,6 +887,44 @@ int manager_add_job(Manager *m, JobType
+                 return -EINVAL;
+         }
+ 
++        if (type == JOB_RELOAD || type == JOB_RELOAD_OR_START || type == JOB_RESTART || type == JOB_TRY_RESTART) {
++                /* If final.target is queued (happens on poweroff, reboot and
++                 * halt), we will not accept new reload jobs. They would not be
++                 * executed ever anyways (since the shutdown comes first), but
++                 * they block the shutdown process: when systemd tries to stop
++                 * a unit such as ifup@eth0.service, that unit might invoke a
++                 * systemctl reload command, which blockingly waits (but only
++                 * gets executed after all other queued units for the shutdown
++                 * have been executed).
++                 *
++                 * See http://bugs.debian.org/624599 and
++                 *     http://bugs.debian.org/635777 */
++                HASHMAP_FOREACH(j, m->jobs, i) {
++                        assert(j->installed);
++
++                        if (strcmp(j->unit->id, "final.target") == 0) {
++                                log_debug("final.target is queued, ignoring %s request for unit %s", job_type_to_string(type), unit->id);
++                                dbus_set_error(e, BUS_ERROR_INVALID_JOB_MODE, "final.target is queued, ignoring %s request for unit %s", job_type_to_string(type), unit->id);
++                                return -EINVAL;
++                        }
++                        /* Trying to reload services from multi-user.target
++                         * during the early boot stage can lead to deadlocks.
++                         * An example is samba being reloaded by the dhcp hook
++                         * when the network is activated during rcS.
++                         * As a workaround we ignore reload or (re)start
++                         * requests while sysinit.target is queued for
++                         * services which have the DefaultDependencies option
++                         * set to yes.
++                         *
++                         * See http://bugs.debian.org/624599 */
++                        if (strcmp(j->unit->id, "sysinit.target") == 0 && unit->default_dependencies) {
++                                log_debug("sysinit.target is queued, ignoring %s request for unit %s", job_type_to_string(type), unit->id);
++                                dbus_set_error(e, BUS_ERROR_INVALID_JOB_MODE, "sysinit.target is queued, ignoring %s request for unit %s", job_type_to_string(type), unit->id);
++                                return -EINVAL;
++                        }
++                }
++        }
++
+         if (mode == JOB_ISOLATE && !unit->allow_isolate) {
+                 dbus_set_error(e, BUS_ERROR_NO_ISOLATION, "Operation refused, unit may not be isolated.");
+                 return -EPERM;
+--- systemd-204.orig/src/core/service.c
++++ systemd-204/src/core/service.c
+@@ -51,7 +51,8 @@
+ 
+ typedef enum RunlevelType {
+         RUNLEVEL_UP,
+-        RUNLEVEL_DOWN
++        RUNLEVEL_DOWN,
++        RUNLEVEL_SYSINIT
+ } RunlevelType;
+ 
+ static const struct {
+@@ -66,6 +67,9 @@ static const struct {
+         { "rc4.d",  SPECIAL_RUNLEVEL4_TARGET, RUNLEVEL_UP },
+         { "rc5.d",  SPECIAL_RUNLEVEL5_TARGET, RUNLEVEL_UP },
+ 
++        /* Debian style rcS.d */
++        { "rcS.d",  SPECIAL_SYSINIT_TARGET,   RUNLEVEL_SYSINIT },
++
+         /* Standard SysV runlevels for shutdown */
+         { "rc0.d",  SPECIAL_POWEROFF_TARGET,  RUNLEVEL_DOWN },
+         { "rc6.d",  SPECIAL_REBOOT_TARGET,    RUNLEVEL_DOWN }
+@@ -74,10 +78,12 @@ static const struct {
+            directories in this order, and we want to make sure that
+            sysv_start_priority is known when we first load the
+            unit. And that value we only know from S links. Hence
+-           UP must be read before DOWN */
++           UP/SYSINIT must be read before DOWN */
+ };
+ 
+ #define RUNLEVELS_UP "12345"
++/* #define RUNLEVELS_DOWN "06" */
++#define RUNLEVELS_BOOT "bBsS"
+ #endif
+ 
+ static const UnitActiveState state_translation_table[_SERVICE_STATE_MAX] = {
+@@ -324,8 +330,7 @@ static void service_done(Unit *u) {
+ static char *sysv_translate_name(const char *name) {
+         char *r;
+ 
+-        r = new(char, strlen(name) + sizeof(".service"));
+-        if (!r)
++        if (!(r = new(char, strlen(name) + sizeof(".service"))))
+                 return NULL;
+ 
+         if (endswith(name, ".sh"))
+@@ -348,12 +353,16 @@ static int sysv_translate_facility(const
+ 
+         static const char * const table[] = {
+                 /* LSB defined facilities */
+-                "local_fs",             NULL,
++                "local_fs",             SPECIAL_LOCAL_FS_TARGET,
++                /* Due to unfortunate name selection in Mandriva,
++                 * $network is provided by network-up which is ordered
++                 * after network which actually starts interfaces.
++                 * To break the loop, just ignore it */
+                 "network",              SPECIAL_NETWORK_TARGET,
+                 "named",                SPECIAL_NSS_LOOKUP_TARGET,
+-                "portmap",              SPECIAL_RPCBIND_TARGET,
++                "portmap",              SPECIAL_RPCBIND_SERVICE,
+                 "remote_fs",            SPECIAL_REMOTE_FS_TARGET,
+-                "syslog",               NULL,
++                "syslog",               SPECIAL_SYSLOG_TARGET,
+                 "time",                 SPECIAL_TIME_SYNC_TARGET,
+         };
+ 
+@@ -374,9 +383,8 @@ static int sysv_translate_facility(const
+                 if (!table[i+1])
+                         return 0;
+ 
+-                r = strdup(table[i+1]);
+-                if (!r)
+-                        return log_oom();
++                if (!(r = strdup(table[i+1])))
++                        return -ENOMEM;
+ 
+                 goto finish;
+         }
+@@ -905,6 +913,13 @@ static int service_load_sysv_path(Servic
+ 
+         if ((r = sysv_exec_commands(s, supports_reload)) < 0)
+                 goto finish;
++        if (s->sysv_runlevels &&
++            chars_intersect(RUNLEVELS_BOOT, s->sysv_runlevels) &&
++            chars_intersect(RUNLEVELS_UP, s->sysv_runlevels)) {
++                /* Service has both boot and "up" runlevels
++                   configured.  Kill the "up" ones. */
++                delete_chars(s->sysv_runlevels, RUNLEVELS_UP);
++        }
+ 
+         if (s->sysv_runlevels && !chars_intersect(RUNLEVELS_UP, s->sysv_runlevels)) {
+                 /* If there a runlevels configured for this service
+@@ -3530,7 +3545,7 @@ static int service_enumerate(Manager *m)
+ 
+                                 if (de->d_name[0] == 'S')  {
+ 
+-                                        if (rcnd_table[i].type == RUNLEVEL_UP) {
++                                        if (rcnd_table[i].type == RUNLEVEL_UP || rcnd_table[i].type == RUNLEVEL_SYSINIT) {
+                                                 SERVICE(service)->sysv_start_priority_from_rcnd =
+                                                         MAX(a*10 + b, SERVICE(service)->sysv_start_priority_from_rcnd);
+ 
+@@ -3547,7 +3562,8 @@ static int service_enumerate(Manager *m)
+                                                 goto finish;
+ 
+                                 } else if (de->d_name[0] == 'K' &&
+-                                           (rcnd_table[i].type == RUNLEVEL_DOWN)) {
++                                           (rcnd_table[i].type == RUNLEVEL_DOWN ||
++                                            rcnd_table[i].type == RUNLEVEL_SYSINIT)) {
+ 
+                                         r = set_ensure_allocated(&shutdown_services,
+                                                                  trivial_hash_func, trivial_compare_func);
+--- systemd-204.orig/src/core/special.h
++++ systemd-204/src/core/special.h
+@@ -48,7 +48,7 @@
+ #define SPECIAL_SOCKETS_TARGET "sockets.target"
+ #define SPECIAL_TIMERS_TARGET "timers.target"
+ #define SPECIAL_PATHS_TARGET "paths.target"
+-#define SPECIAL_LOCAL_FS_TARGET "local-fs.target"
++#define SPECIAL_LOCAL_FS_TARGET "local-fs.target"         /* LSB's $local_fs */
+ #define SPECIAL_LOCAL_FS_PRE_TARGET "local-fs-pre.target"
+ #define SPECIAL_INITRD_FS_TARGET "initrd-fs.target"
+ #define SPECIAL_INITRD_ROOT_FS_TARGET "initrd-root-fs.target"
+@@ -61,7 +61,8 @@
+ /* LSB compatibility */
+ #define SPECIAL_NETWORK_TARGET "network.target"           /* LSB's $network */
+ #define SPECIAL_NSS_LOOKUP_TARGET "nss-lookup.target"     /* LSB's $named */
+-#define SPECIAL_RPCBIND_TARGET "rpcbind.target"           /* LSB's $portmap */
++#define SPECIAL_RPCBIND_SERVICE "rpcbind.service"         /* LSB's $portmap */
++#define SPECIAL_SYSLOG_TARGET "syslog.target"             /* LSB's $syslog */
+ #define SPECIAL_TIME_SYNC_TARGET "time-sync.target"       /* LSB's $time */
+ 
+ /*
+--- systemd-204.orig/src/cryptsetup/cryptsetup.c
++++ systemd-204/src/cryptsetup/cryptsetup.c
+@@ -117,7 +117,7 @@ static int parse_one_option(const char *
+                 opt_readonly = true;
+         else if (streq(option, "verify"))
+                 opt_verify = true;
+-        else if (streq(option, "allow-discards"))
++        else if (streq(option, "allow-discards") || streq(option, "discard"))
+                 opt_discards = true;
+         else if (streq(option, "luks"))
+                 opt_type = CRYPT_LUKS1;
+--- systemd-204.orig/src/fstab-generator/fstab-generator.c
++++ systemd-204/src/fstab-generator/fstab-generator.c
+@@ -315,7 +315,8 @@ static int add_mount(
+         }
+ 
+         if (!noauto) {
+-                if (post) {
++                /* don't start network mounts automatically, we do that via ifupdown hooks for now */
++                if (post && !streq(post, SPECIAL_REMOTE_FS_TARGET)) {
+                         lnk = strjoin(arg_dest, "/", post, nofail || automount ? ".wants/" : ".requires/", name, NULL);
+                         if (!lnk)
+                                 return log_oom();
+--- systemd-204.orig/src/hostname/org.freedesktop.hostname1.service
++++ systemd-204/src/hostname/org.freedesktop.hostname1.service
+@@ -7,6 +7,6 @@
+ 
+ [D-BUS Service]
+ Name=org.freedesktop.hostname1
+-Exec=/bin/false
++Exec=/lib/systemd/systemd-hostnamed
+ User=root
+ SystemdService=dbus-org.freedesktop.hostname1.service
+--- systemd-204.orig/src/libudev/libudev-hwdb.c
++++ systemd-204/src/libudev/libudev-hwdb.c
+@@ -271,30 +271,30 @@ _public_ struct udev_hwdb *udev_hwdb_new
+         hwdb->refcount = 1;
+         udev_list_init(udev, &hwdb->properties_list, true);
+ 
+-        hwdb->f = fopen("/etc/udev/hwdb.bin", "re");
++        hwdb->f = fopen(UDEVLIBEXECDIR "/hwdb.bin", "re");
+         if (!hwdb->f) {
+-                log_debug("error reading /etc/udev/hwdb.bin: %m");
++                log_debug("error reading " UDEVLIBEXECDIR "/hwdb.bin: %m");
+                 udev_hwdb_unref(hwdb);
+                 return NULL;
+         }
+ 
+         if (fstat(fileno(hwdb->f), &hwdb->st) < 0 ||
+             (size_t)hwdb->st.st_size < offsetof(struct trie_header_f, strings_len) + 8) {
+-                log_debug("error reading /etc/udev/hwdb.bin: %m");
++                log_debug("error reading " UDEVLIBEXECDIR "/hwdb.bin: %m");
+                 udev_hwdb_unref(hwdb);
+                 return NULL;
+         }
+ 
+         hwdb->map = mmap(0, hwdb->st.st_size, PROT_READ, MAP_SHARED, fileno(hwdb->f), 0);
+         if (hwdb->map == MAP_FAILED) {
+-                log_debug("error mapping /etc/udev/hwdb.bin: %m");
++                log_debug("error mapping " UDEVLIBEXECDIR "/hwdb.bin: %m");
+                 udev_hwdb_unref(hwdb);
+                 return NULL;
+         }
+ 
+         if (memcmp(hwdb->map, sig, sizeof(hwdb->head->signature)) != 0 ||
+             (size_t)hwdb->st.st_size != le64toh(hwdb->head->file_size)) {
+-                log_debug("error recognizing the format of /etc/udev/hwdb.bin");
++                log_debug("error recognizing the format of " UDEVLIBEXECDIR "/hwdb.bin");
+                 udev_hwdb_unref(hwdb);
+                 return NULL;
+         }
+--- /dev/null
++++ systemd-204/src/locale/generate-kbd-model-map
+@@ -0,0 +1,31 @@
++import sys
++import system_config_keyboard.keyboard_models
++
++def strdash(s):
++        return s.strip() or '-'
++
++def tab_extend(s, n=1):
++        s = strdash(s)
++        k = len(s) // 8
++
++        if k >= n:
++                f = 1
++        else:
++                f = n - k
++
++        return s + '\t'*f
++
++
++models = system_config_keyboard.keyboard_models.KeyboardModels().get_models()
++
++print "# Generated from system-config-keyboard's model list"
++print "# consolelayout\t\txlayout\txmodel\t\txvariant\txoptions"
++
++for key, value in reversed(models.items()):
++        options = "terminate:ctrl_alt_bksp"
++        if value[4]:
++                options += ',' + value[4]
++
++        print ''.join((tab_extend(key, 3), tab_extend(value[1]),
++                       tab_extend(value[2], 2), tab_extend(value[3], 2),
++                       options))
+--- systemd-204.orig/src/locale/localed.c
++++ systemd-204/src/locale/localed.c
+@@ -202,6 +202,24 @@ static int read_data_locale(void) {
+                            "LC_IDENTIFICATION", &data[PROP_LC_IDENTIFICATION],
+                            NULL);
+ 
++        if (r == -ENOENT)
++                r = parse_env_file("/etc/default/locale", NEWLINE,
++                                   "LANG",              &data[PROP_LANG],
++                                   "LANGUAGE",          &data[PROP_LANGUAGE],
++                                   "LC_CTYPE",          &data[PROP_LC_CTYPE],
++                                   "LC_NUMERIC",        &data[PROP_LC_NUMERIC],
++                                   "LC_TIME",           &data[PROP_LC_TIME],
++                                   "LC_COLLATE",        &data[PROP_LC_COLLATE],
++                                   "LC_MONETARY",       &data[PROP_LC_MONETARY],
++                                   "LC_MESSAGES",       &data[PROP_LC_MESSAGES],
++                                   "LC_PAPER",          &data[PROP_LC_PAPER],
++                                   "LC_NAME",           &data[PROP_LC_NAME],
++                                   "LC_ADDRESS",        &data[PROP_LC_ADDRESS],
++                                   "LC_TELEPHONE",      &data[PROP_LC_TELEPHONE],
++                                   "LC_MEASUREMENT",    &data[PROP_LC_MEASUREMENT],
++                                   "LC_IDENTIFICATION", &data[PROP_LC_IDENTIFICATION],
++                                   NULL);
++
+         if (r == -ENOENT) {
+                 int p;
+ 
+@@ -254,77 +272,18 @@ static int read_data_vconsole(void) {
+ }
+ 
+ static int read_data_x11(void) {
+-        FILE *f;
+-        char line[LINE_MAX];
+-        bool in_section = false;
++        int r;
+ 
+         free_data_x11();
+ 
+-        f = fopen("/etc/X11/xorg.conf.d/00-keyboard.conf", "re");
+-        if (!f)
+-                return errno == ENOENT ? 0 : -errno;
+-
+-        while (fgets(line, sizeof(line), f)) {
+-                char *l;
+-
+-                char_array_0(line);
+-                l = strstrip(line);
+-
+-                if (l[0] == 0 || l[0] == '#')
+-                        continue;
+-
+-                if (in_section && first_word(l, "Option")) {
+-                        char **a;
+-
+-                        a = strv_split_quoted(l);
+-                        if (!a) {
+-                                fclose(f);
+-                                return -ENOMEM;
+-                        }
+-
+-                        if (strv_length(a) == 3) {
+-
+-                                if (streq(a[1], "XkbLayout")) {
+-                                        free(state.x11_layout);
+-                                        state.x11_layout = a[2];
+-                                        a[2] = NULL;
+-                                } else if (streq(a[1], "XkbModel")) {
+-                                        free(state.x11_model);
+-                                        state.x11_model = a[2];
+-                                        a[2] = NULL;
+-                                } else if (streq(a[1], "XkbVariant")) {
+-                                        free(state.x11_variant);
+-                                        state.x11_variant = a[2];
+-                                        a[2] = NULL;
+-                                } else if (streq(a[1], "XkbOptions")) {
+-                                        free(state.x11_options);
+-                                        state.x11_options = a[2];
+-                                        a[2] = NULL;
+-                                }
+-                        }
+-
+-                        strv_free(a);
+-
+-                } else if (!in_section && first_word(l, "Section")) {
+-                        char **a;
+-
+-                        a = strv_split_quoted(l);
+-                        if (!a) {
+-                                fclose(f);
+-                                return -ENOMEM;
+-                        }
+-
+-                        if (strv_length(a) == 2 && streq(a[1], "InputClass"))
+-                                in_section = true;
+-
+-                        strv_free(a);
+-                } else if (in_section && first_word(l, "EndSection"))
+-                        in_section = false;
+-        }
+-
+-        fclose(f);
++        r = parse_env_file("/etc/default/keyboard", NEWLINE,
++                           "XKBMODEL",          &state.x11_model,
++                           "XKBLAYOUT",         &state.x11_layout,
++                           "XKBVARIANT",        &state.x11_variant,
++                           "XKBOPTIONS",        &state.x11_options,
++                           NULL);
+ 
+-        return 0;
++        return r;
+ }
+ 
+ static int read_data(void) {
+@@ -340,8 +299,13 @@ static int read_data(void) {
+ static int write_data_locale(void) {
+         int r, p;
+         char **l = NULL;
++        const char *path = "/etc/locale.conf";
+ 
+-        r = load_env_file("/etc/locale.conf", NULL, &l);
++        r = load_env_file(path, NULL, &l);
++        if (r < 0 && r == -ENOENT) {
++                path = "/etc/default/locale";
++                r = load_env_file(path, NULL, &l);
++        }
+         if (r < 0 && r != -ENOENT)
+                 return r;
+ 
+@@ -373,13 +337,13 @@ static int write_data_locale(void) {
+         if (strv_isempty(l)) {
+                 strv_free(l);
+ 
+-                if (unlink("/etc/locale.conf") < 0)
++                if (unlink(path) < 0)
+                         return errno == ENOENT ? 0 : -errno;
+ 
+                 return 0;
+         }
+ 
+-        r = write_env_file_label("/etc/locale.conf", l);
++        r = write_env_file_label(path, l);
+         strv_free(l);
+ 
+         return r;
+@@ -542,59 +506,100 @@ static int write_data_vconsole(void) {
+ }
+ 
+ static int write_data_x11(void) {
+-        FILE *f;
+-        char *temp_path;
+         int r;
+ 
+-        if (isempty(state.x11_layout) &&
+-            isempty(state.x11_model) &&
+-            isempty(state.x11_variant) &&
+-            isempty(state.x11_options)) {
++        char *t, **u, **l = NULL;
+ 
+-                if (unlink("/etc/X11/xorg.conf.d/00-keyboard.conf") < 0)
+-                        return errno == ENOENT ? 0 : -errno;
++        r = load_env_file("/etc/default/keyboard", NULL, &l);
++        if (r < 0 && r != -ENOENT)
++                return r;
+ 
+-                return 0;
++        /* This could perhaps be done more elegantly using an array
++         * like we do for the locale, instead of struct
++         */
++        if (isempty(state.x11_layout)) {
++                l = strv_env_unset(l, "XKBLAYOUT");
++        } else {
++                if (asprintf(&t, "XKBLAYOUT=%s", state.x11_layout) < 0) {
++                        strv_free(l);
++                        return -ENOMEM;
++                }
++
++                u = strv_env_set(l, t);
++                free(t);
++                strv_free(l);
++
++                if (!u)
++                        return -ENOMEM;
++
++                l = u;
+         }
+ 
+-        mkdir_p_label("/etc/X11/xorg.conf.d", 0755);
++        if (isempty(state.x11_model)) {
++                l = strv_env_unset(l, "XKBMODEL");
++        } else {
++                if (asprintf(&t, "XKBMODEL=%s", state.x11_model) < 0) {
++                        strv_free(l);
++                        return -ENOMEM;
++                }
+ 
+-        r = fopen_temporary("/etc/X11/xorg.conf.d/00-keyboard.conf", &f, &temp_path);
+-        if (r < 0)
+-                return r;
++                u = strv_env_set(l, t);
++                free(t);
++                strv_free(l);
+ 
+-        fchmod(fileno(f), 0644);
++                if (!u)
++                        return -ENOMEM;
+ 
+-        fputs("# Read and parsed by systemd-localed. It's probably wise not to edit this file\n"
+-              "# manually too freely.\n"
+-              "Section \"InputClass\"\n"
+-              "        Identifier \"system-keyboard\"\n"
+-              "        MatchIsKeyboard \"on\"\n", f);
+-
+-        if (!isempty(state.x11_layout))
+-                fprintf(f, "        Option \"XkbLayout\" \"%s\"\n", state.x11_layout);
+-
+-        if (!isempty(state.x11_model))
+-                fprintf(f, "        Option \"XkbModel\" \"%s\"\n", state.x11_model);
+-
+-        if (!isempty(state.x11_variant))
+-                fprintf(f, "        Option \"XkbVariant\" \"%s\"\n", state.x11_variant);
+-
+-        if (!isempty(state.x11_options))
+-                fprintf(f, "        Option \"XkbOptions\" \"%s\"\n", state.x11_options);
+-
+-        fputs("EndSection\n", f);
+-        fflush(f);
+-
+-        if (ferror(f) || rename(temp_path, "/etc/X11/xorg.conf.d/00-keyboard.conf") < 0) {
+-                r = -errno;
+-                unlink("/etc/X11/xorg.conf.d/00-keyboard.conf");
+-                unlink(temp_path);
+-        } else
+-                r = 0;
++                l = u;
++        }
++
++        if (isempty(state.x11_variant)) {
++                l = strv_env_unset(l, "XKBVARIANT");
++        } else {
++                if (asprintf(&t, "XKBVARIANT=%s", state.x11_variant) < 0) {
++                        strv_free(l);
++                        return -ENOMEM;
++                }
++
++                u = strv_env_set(l, t);
++                free(t);
++                strv_free(l);
++
++                if (!u)
++                        return -ENOMEM;
++
++                l = u;
++        }
++
++        if (isempty(state.x11_options)) {
++                l = strv_env_unset(l, "XKBOPTIONS");
++        } else {
++                if (asprintf(&t, "XKBOPTIONS=%s", state.x11_options) < 0) {
++                        strv_free(l);
++                        return -ENOMEM;
++                }
++
++                u = strv_env_set(l, t);
++                free(t);
++                strv_free(l);
++
++                if (!u)
++                        return -ENOMEM;
++
++                l = u;
++        }
++
++        if (strv_isempty(l)) {
++                strv_free(l);
+ 
+-        fclose(f);
+-        free(temp_path);
++                if (unlink("/etc/default/keyboard") < 0)
++                        return errno == ENOENT ? 0 : -errno;
++
++                return 0;
++        }
++
++        r = write_env_file("/etc/default/keyboard", l);
++        strv_free(l);
+ 
+         return r;
+ }
+--- systemd-204.orig/src/locale/org.freedesktop.locale1.service
++++ systemd-204/src/locale/org.freedesktop.locale1.service
+@@ -7,6 +7,6 @@
+ 
+ [D-BUS Service]
+ Name=org.freedesktop.locale1
+-Exec=/bin/false
++Exec=/lib/systemd/systemd-localed
+ User=root
+ SystemdService=dbus-org.freedesktop.locale1.service
+--- systemd-204.orig/src/login/logind-session.c
++++ systemd-204/src/login/logind-session.c
+@@ -642,7 +642,7 @@ static int session_terminate_cgroup(Sess
+ 
+                         r = manager_get_session_by_pid(s->manager, s->leader, &t);
+                         if (r > 0 && t == s) {
+-                                kill(s->leader, SIGTERM); /* for normal processes */
++                                /*kill(s->leader, SIGTERM); */ /* for normal processes */
+                                 kill(s->leader, SIGHUP);  /* for shells */
+                                 kill(s->leader, SIGCONT); /* in case they are stopped */
+                         }
+--- systemd-204.orig/src/login/logind.c
++++ systemd-204/src/login/logind.c
+@@ -1371,9 +1371,17 @@ void manager_gc(Manager *m, bool drop_no
+         Seat *seat;
+         Session *session;
+         User *user;
++        Iterator i;
+ 
+         assert(m);
+ 
++        /* clean up empty sessions when not running under systemd */
++        if (!sd_booted()) {
++                HASHMAP_FOREACH(session, m->session_cgroups, i)
++                        if (session_get_state(session) == SESSION_CLOSING)
++                                session_add_to_gc_queue(session);
++        }
++
+         while ((seat = m->seat_gc_queue)) {
+                 LIST_REMOVE(Seat, gc_queue, m->seat_gc_queue, seat);
+                 seat->in_gc_queue = false;
+--- systemd-204.orig/src/login/org.freedesktop.login1.service
++++ systemd-204/src/login/org.freedesktop.login1.service
+@@ -7,6 +7,6 @@
+ 
+ [D-BUS Service]
+ Name=org.freedesktop.login1
+-Exec=/bin/false
++Exec=/lib/systemd/systemd-logind-launch
+ User=root
+ SystemdService=dbus-org.freedesktop.login1.service
+--- systemd-204.orig/src/login/pam-module.c
++++ systemd-204/src/login/pam-module.c
+@@ -336,10 +336,6 @@ _public_ PAM_EXTERN int pam_sm_open_sess
+ 
+         /* pam_syslog(handle, LOG_INFO, "pam-systemd initializing"); */
+ 
+-        /* Make this a NOP on non-logind systems */
+-        if (!logind_running())
+-                return PAM_SUCCESS;
+-
+         if (parse_argv(handle,
+                        argc, argv,
+                        &controllers, &reset_controllers,
+@@ -400,7 +396,8 @@ _public_ PAM_EXTERN int pam_sm_open_sess
+ 
+         bus = dbus_bus_get_private(DBUS_BUS_SYSTEM, &error);
+         if (!bus) {
+-                pam_syslog(handle, LOG_ERR, "Failed to connect to system bus: %s", bus_error_message(&error));
++                if (debug)
++                        pam_syslog(handle, LOG_ERR, "Failed to connect to system bus: %s", bus_error_message(&error));
+                 r = PAM_SESSION_ERR;
+                 goto finish;
+         }
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/conf.py
+@@ -0,0 +1,279 @@
++# -*- coding: utf-8 -*-
++#
++# python-systemd documentation build configuration file, created by
++# sphinx-quickstart on Sat Feb  9 13:49:42 2013.
++#
++# This file is execfile()d with the current directory set to its containing dir.
++#
++# Note that not all possible configuration values are present in this
++# autogenerated file.
++#
++# All configuration values have a default; values that are commented out
++# serve to show the default.
++
++import sys, os
++
++# If extensions (or modules to document with autodoc) are in another directory,
++# add these directories to sys.path here. If the directory is relative to the
++# documentation root, use os.path.abspath to make it absolute, like shown here.
++#sys.path.insert(0, os.path.abspath('.'))
++
++# -- General configuration -----------------------------------------------------
++
++# If your documentation needs a minimal Sphinx version, state it here.
++#needs_sphinx = '1.0'
++
++# Add any Sphinx extension module names here, as strings. They can be extensions
++# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
++extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx', 'sphinx.ext.coverage', 'sphinx.ext.viewcode']
++
++# Add any paths that contain templates here, relative to this directory.
++templates_path = ['.']
++
++# The suffix of source filenames.
++source_suffix = '.rst'
++
++# The encoding of source files.
++#source_encoding = 'utf-8-sig'
++
++# The master toctree document.
++master_doc = 'index'
++
++# General information about the project.
++project = u'python-systemd'
++
++# The language for content autogenerated by Sphinx. Refer to documentation
++# for a list of supported languages.
++#language = None
++
++# There are two options for replacing |today|: either, you set today to some
++# non-false value, then it is used:
++#today = ''
++# Else, today_fmt is used as the format for a strftime call.
++#today_fmt = '%B %d, %Y'
++
++# List of patterns, relative to source directory, that match files and
++# directories to ignore when looking for source files.
++exclude_patterns = []
++
++# The reST default role (used for this markup: `text`) to use for all documents.
++#default_role = None
++
++# If true, '()' will be appended to :func: etc. cross-reference text.
++#add_function_parentheses = True
++
++# If true, the current module name will be prepended to all description
++# unit titles (such as .. function::).
++#add_module_names = True
++
++# If true, sectionauthor and moduleauthor directives will be shown in the
++# output. They are ignored by default.
++#show_authors = False
++
++# The name of the Pygments (syntax highlighting) style to use.
++pygments_style = 'sphinx'
++
++# A list of ignored prefixes for module index sorting.
++#modindex_common_prefix = []
++
++
++# -- Options for HTML output ---------------------------------------------------
++
++# The theme to use for HTML and HTML Help pages.  See the documentation for
++# a list of builtin themes.
++html_theme = 'default'
++
++# Theme options are theme-specific and customize the look and feel of a theme
++# further.  For a list of options available for each theme, see the
++# documentation.
++#html_theme_options = {}
++
++# Add any paths that contain custom themes here, relative to this directory.
++#html_theme_path = []
++
++# The name for this set of Sphinx documents.  If None, it defaults to
++# "<project> v<release> documentation".
++#html_title = None
++
++# A shorter title for the navigation bar.  Default is the same as html_title.
++#html_short_title = None
++
++# The name of an image file (relative to this directory) to place at the top
++# of the sidebar.
++#html_logo = None
++
++# The name of an image file (within the static path) to use as favicon of the
++# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
++# pixels large.
++#html_favicon = None
++
++# Add any paths that contain custom static files (such as style sheets) here,
++# relative to this directory. They are copied after the builtin static files,
++# so a file named "default.css" will overwrite the builtin "default.css".
++html_static_path = ['.']
++
++# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
++# using the given strftime format.
++#html_last_updated_fmt = '%b %d, %Y'
++
++# If true, SmartyPants will be used to convert quotes and dashes to
++# typographically correct entities.
++#html_use_smartypants = True
++
++# Custom sidebar templates, maps document names to template names.
++#html_sidebars = {}
++
++# Additional templates that should be rendered to pages, maps page names to
++# template names.
++#html_additional_pages = {}
++
++# If false, no module index is generated.
++#html_domain_indices = True
++
++# If false, no index is generated.
++#html_use_index = True
++
++# If true, the index is split into individual pages for each letter.
++#html_split_index = False
++
++# If true, links to the reST sources are added to the pages.
++html_show_sourcelink = False
++
++# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
++#html_show_sphinx = True
++
++# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
++#html_show_copyright = True
++
++# If true, an OpenSearch description file will be output, and all pages will
++# contain a <link> tag referring to it.  The value of this option must be the
++# base URL from which the finished HTML is served.
++#html_use_opensearch = ''
++
++# This is the file name suffix for HTML files (e.g. ".xhtml").
++#html_file_suffix = None
++
++# Output file base name for HTML help builder.
++htmlhelp_basename = 'python-systemddoc'
++
++
++# -- Options for LaTeX output --------------------------------------------------
++
++latex_elements = {
++# The paper size ('letterpaper' or 'a4paper').
++#'papersize': 'letterpaper',
++
++# The font size ('10pt', '11pt' or '12pt').
++#'pointsize': '10pt',
++
++# Additional stuff for the LaTeX preamble.
++#'preamble': '',
++}
++
++# Grouping the document tree into LaTeX files. List of tuples
++# (source start file, target name, title, author, documentclass [howto/manual]).
++latex_documents = [
++  ('index', 'python-systemd.tex', u'python-systemd Documentation',
++   None, 'manual'),
++]
++
++# The name of an image file (relative to this directory) to place at the top of
++# the title page.
++#latex_logo = None
++
++# For "manual" documents, if this is true, then toplevel headings are parts,
++# not chapters.
++#latex_use_parts = False
++
++# If true, show page references after internal links.
++#latex_show_pagerefs = False
++
++# If true, show URL addresses after external links.
++#latex_show_urls = False
++
++# Documents to append as an appendix to all manuals.
++#latex_appendices = []
++
++# If false, no module index is generated.
++#latex_domain_indices = True
++
++
++# -- Options for manual page output --------------------------------------------
++
++# One entry per manual page. List of tuples
++# (source start file, name, description, authors, manual section).
++man_pages = [
++    ('index', 'python-systemd', u'python-systemd Documentation',
++     [], 1)
++]
++
++# If true, show URL addresses after external links.
++#man_show_urls = False
++
++
++# -- Options for Texinfo output ------------------------------------------------
++
++# Grouping the document tree into Texinfo files. List of tuples
++# (source start file, target name, title, author,
++#  dir menu entry, description, category)
++texinfo_documents = [
++  ('index', 'python-systemd', u'python-systemd Documentation',
++   u'David Strauss, Zbigniew Jędrzejewski-Szmek, Marti Raudsepp, Steven Hiscocks', 'python-systemd', 'One line description of project.',
++   'Miscellaneous'),
++]
++
++# Documents to append as an appendix to all manuals.
++#texinfo_appendices = []
++
++# If false, no module index is generated.
++#texinfo_domain_indices = True
++
++# How to display URL addresses: 'footnote', 'no', or 'inline'.
++#texinfo_show_urls = 'footnote'
++
++
++# -- Options for Epub output ---------------------------------------------------
++
++# Bibliographic Dublin Core info.
++epub_title = u'python-systemd'
++epub_author = u'David Strauss, Zbigniew Jędrzejewski-Szmek, Marti Raudsepp, Steven Hiscocks'
++epub_publisher = u'David Strauss, Zbigniew Jędrzejewski-Szmek, Marti Raudsepp, Steven Hiscocks'
++epub_copyright = u'2013, David Strauss, Zbigniew Jędrzejewski-Szmek, Marti Raudsepp, Steven Hiscocks'
++
++# The language of the text. It defaults to the language option
++# or en if the language is not set.
++#epub_language = ''
++
++# The scheme of the identifier. Typical schemes are ISBN or URL.
++#epub_scheme = ''
++
++# The unique identifier of the text. This can be a ISBN number
++# or the project homepage.
++#epub_identifier = ''
++
++# A unique identification for the text.
++#epub_uid = ''
++
++# A tuple containing the cover image and cover page html template filenames.
++#epub_cover = ()
++
++# HTML files that should be inserted before the pages created by sphinx.
++# The format is a list of tuples containing the path and title.
++#epub_pre_files = []
++
++# HTML files shat should be inserted after the pages created by sphinx.
++# The format is a list of tuples containing the path and title.
++#epub_post_files = []
++
++# A list of files that should not be packed into the epub file.
++#epub_exclude_files = []
++
++# The depth of the table of contents in toc.ncx.
++#epub_tocdepth = 3
++
++# Allow duplicate toc entries.
++#epub_tocdup = True
++
++
++# Example configuration for intersphinx: refer to the Python standard library.
++intersphinx_mapping = {'http://docs.python.org/': None}
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/daemon.rst
+@@ -0,0 +1,16 @@
++`systemd.daemon` module
++=======================
++
++.. automodule:: systemd.daemon
++   :members:
++   :undoc-members:
++   :inherited-members:
++
++   .. autoattribute:: systemd.daemon.LISTEN_FDS_START
++
++   .. autofunction:: _listen_fds
++   .. autofunction:: _is_fifo
++   .. autofunction:: _is_socket
++   .. autofunction:: _is_socket_unix
++   .. autofunction:: _is_socket_inet
++   .. autofunction:: _is_mq
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/default.css
+@@ -0,0 +1,196 @@
++@import url("basic.css");
++
++/* -- page layout ----------------------------------------------------------- */
++
++div.documentwrapper {
++    float: left;
++    width: 100%;
++}
++
++div.bodywrapper {
++    margin: 0 0 0 230px;
++}
++
++div.body {
++    background-color: #ffffff;
++    color: #000000;
++    padding: 0 20px 30px 20px;
++}
++
++div.footer {
++    color: #ffffff;
++    width: 100%;
++    padding: 9px 0 9px 0;
++    text-align: center;
++    font-size: 75%;
++}
++
++div.footer a {
++    color: #ffffff;
++    text-decoration: underline;
++}
++
++div.related {
++    background-color: #133f52;
++    line-height: 30px;
++    color: #ffffff;
++}
++
++div.related a {
++    color: #ffffff;
++}
++
++div.sphinxsidebar {
++    background-color: #dddddd;
++}
++
++div.sphinxsidebar p.topless {
++    margin: 5px 10px 10px 10px;
++}
++
++div.sphinxsidebar ul {
++    margin: 10px;
++    padding: 0;
++}
++
++div.sphinxsidebar input {
++    border: 1px solid #000000;
++    font-family: sans-serif;
++    font-size: 1em;
++}
++
++
++
++/* -- hyperlink styles ------------------------------------------------------ */
++
++a {
++    text-decoration: none;
++}
++
++a:hover {
++    text-decoration: underline;
++}
++
++
++
++/* -- body styles ----------------------------------------------------------- */
++
++div.body h1,
++div.body h2,
++div.body h3,
++div.body h4,
++div.body h5,
++div.body h6 {
++    font-family: 'Trebuchet MS', sans-serif;
++    background-color: #f2f2f2;
++    font-weight: normal;
++    color: #20435c;
++    border-bottom: 1px solid #ccc;
++    margin: 20px -20px 10px -20px;
++    padding: 3px 0 3px 10px;
++}
++
++div.body h1 { margin-top: 0; font-size: 200%; }
++div.body h2 { font-size: 160%; }
++div.body h3 { font-size: 140%; }
++div.body h4 { font-size: 120%; }
++div.body h5 { font-size: 110%; }
++div.body h6 { font-size: 100%; }
++
++a.headerlink {
++    color: #c60f0f;
++    font-size: 0.8em;
++    padding: 0 4px 0 4px;
++    text-decoration: none;
++}
++
++a.headerlink:hover {
++    background-color: #c60f0f;
++    color: white;
++}
++
++div.body p, div.body dd, div.body li {
++    text-align: justify;
++    line-height: 130%;
++}
++
++div.admonition p.admonition-title + p {
++    display: inline;
++}
++
++div.admonition p {
++    margin-bottom: 5px;
++}
++
++div.admonition pre {
++    margin-bottom: 5px;
++}
++
++div.admonition ul, div.admonition ol {
++    margin-bottom: 5px;
++}
++
++div.note {
++    background-color: #eee;
++    border: 1px solid #ccc;
++}
++
++div.seealso {
++    background-color: #ffc;
++    border: 1px solid #ff6;
++}
++
++div.topic {
++    background-color: #eee;
++}
++
++div.warning {
++    background-color: #ffe4e4;
++    border: 1px solid #f66;
++}
++
++p.admonition-title {
++    display: inline;
++}
++
++p.admonition-title:after {
++    content: ":";
++}
++
++pre {
++    padding: 5px;
++    background-color: #eeffcc;
++    color: #333333;
++    line-height: 120%;
++    border: 1px solid #ac9;
++    border-left: none;
++    border-right: none;
++}
++
++tt {
++    background-color: #ecf0f3;
++    padding: 0 1px 0 1px;
++    font-size: 0.95em;
++}
++
++th {
++    background-color: #ede;
++}
++
++.warning tt {
++    background: #efc2c2;
++}
++
++.note tt {
++    background: #d6d6d6;
++}
++
++.viewcode-back {
++    font-family: sans-serif;
++}
++
++div.viewcode-block:target {
++    background-color: #f4debf;
++    border-top: 1px solid #ac9;
++    border-bottom: 1px solid #ac9;
++}
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/id128.rst
+@@ -0,0 +1,40 @@
++`systemd.id128` module
++======================
++
++.. automodule:: systemd.id128
++   :members:
++   :undoc-members:
++   :inherited-members:
++
++   .. autoattribute:: systemd.id128.SD_MESSAGE_COREDUMP
++   .. autoattribute:: systemd.id128.SD_MESSAGE_FORWARD_SYSLOG_MISSED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_HIBERNATE_KEY
++   .. autoattribute:: systemd.id128.SD_MESSAGE_JOURNAL_DROPPED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_JOURNAL_MISSED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_JOURNAL_START
++   .. autoattribute:: systemd.id128.SD_MESSAGE_JOURNAL_STOP
++   .. autoattribute:: systemd.id128.SD_MESSAGE_LID_CLOSED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_LID_OPENED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_OVERMOUNTING
++   .. autoattribute:: systemd.id128.SD_MESSAGE_POWER_KEY
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SEAT_START
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SEAT_STOP
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SESSION_START
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SESSION_STOP
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SHUTDOWN
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SLEEP_START
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SLEEP_STOP
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SPAWN_FAILED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_STARTUP_FINISHED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_SUSPEND_KEY
++   .. autoattribute:: systemd.id128.SD_MESSAGE_TIMEZONE_CHANGE
++   .. autoattribute:: systemd.id128.SD_MESSAGE_TIME_CHANGE
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_FAILED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_RELOADED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_RELOADING
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_STARTED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_STARTING
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_STOPPED
++   .. autoattribute:: systemd.id128.SD_MESSAGE_UNIT_STOPPING
++   .. autoattribute:: systemd.id128.SD_MESSAGE_CONFIG_ERROR
++   .. autoattribute:: systemd.id128.SD_MESSAGE_BOOTCHART
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/index.rst
+@@ -0,0 +1,24 @@
++.. python-systemd documentation master file, created by
++   sphinx-quickstart on Sat Feb  9 13:49:42 2013.
++   You can adapt this file completely to your liking, but it should at least
++   contain the root `toctree` directive.
++
++Welcome to python-systemd's documentation!
++==========================================
++
++Contents:
++
++.. toctree::
++   :maxdepth: 2
++
++   journal
++   id128
++   daemon
++   login
++
++Indices and tables
++==================
++
++* :ref:`genindex`
++* :ref:`modindex`
++* :ref:`search`
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/journal.rst
+@@ -0,0 +1,63 @@
++`systemd.journal` module
++========================
++
++.. automodule:: systemd.journal
++   :members: send, sendv, stream, stream_fd
++   :undoc-members:
++
++`JournalHandler` class
++----------------------
++
++.. autoclass:: JournalHandler
++
++Accessing the Journal
++---------------------
++
++.. autoclass:: _Reader
++   :undoc-members:
++   :inherited-members:
++
++.. autoclass:: Reader
++   :undoc-members:
++   :inherited-members:
++
++   .. automethod:: __init__
++
++.. autofunction:: _get_catalog
++.. autofunction:: get_catalog
++
++.. autoclass:: Monotonic
++
++.. autoattribute:: systemd.journal.DEFAULT_CONVERTERS
++
++Example: polling for journal events
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++This example shows that journal events can be waited for (using
++e.g. `poll`). This makes it easy to integrate Reader in an external
++event loop:
++
++  >>> import select
++  >>> from systemd import journal
++  >>> j = journal.Reader()
++  >>> j.seek_tail()
++  >>> p = select.poll()
++  >>> p.register(j, select.POLLIN)
++  >>> p.poll()
++  [(3, 1)]
++  >>> j.get_next()
++
++
++Journal access types
++~~~~~~~~~~~~~~~~~~~~
++
++.. autoattribute:: systemd.journal.LOCAL_ONLY
++.. autoattribute:: systemd.journal.RUNTIME_ONLY
++.. autoattribute:: systemd.journal.SYSTEM_ONLY
++
++Journal event types
++~~~~~~~~~~~~~~~~~~~
++
++.. autoattribute:: systemd.journal.NOP
++.. autoattribute:: systemd.journal.APPEND
++.. autoattribute:: systemd.journal.INVALIDATE
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/layout.html
+@@ -0,0 +1,17 @@
++{% extends "!layout.html" %}
++
++{% block relbar1 %}
++  <a href="../man/systemd.index.html">Index </a>·
++  <a href="../man/systemd.directives.html">Directives </a>·
++  <a href="index.html">Python </a>·
++  <a href="../libudev/index.html">libudev </a>·
++  <a href="../libudev/index.html">gudev </a>
++  <span style="float:right">systemd {{release}}</span>
++  <hr />
++{% endblock %}
++
++{# remove the lower relbar #}
++{% block relbar2 %} {% endblock %}
++
++{# remove the footer #}
++{% block footer %} {% endblock %}
+--- /dev/null
++++ systemd-204/src/python-systemd/docs/login.rst
+@@ -0,0 +1,5 @@
++`systemd.login` module
++=======================
++
++.. automodule:: systemd.login
++   :members:
+--- systemd-204.orig/src/systemctl/systemctl.c
++++ systemd-204/src/systemctl/systemctl.c
+@@ -4008,7 +4008,6 @@ static int set_environment(DBusConnectio
+ static int enable_sysv_units(char **args) {
+         int r = 0;
+ 
+-#if defined(HAVE_SYSV_COMPAT) && defined(HAVE_CHKCONFIG)
+         const char *verb = args[0];
+         unsigned f = 1, t = 1;
+         LookupPaths paths = {};
+@@ -4017,8 +4016,9 @@ static int enable_sysv_units(char **args
+                 return 0;
+ 
+         if (!streq(verb, "enable") &&
+-            !streq(verb, "disable") &&
+-            !streq(verb, "is-enabled"))
++            !streq(verb, "disable"))
++            // update-rc.d currently does not provide is-enabled
++            //!streq(verb, "is-enabled"))
+                 return 0;
+ 
+         /* Processes all SysV units, and reshuffles the array so that
+@@ -4034,7 +4034,7 @@ static int enable_sysv_units(char **args
+                 _cleanup_free_ char *p = NULL, *q = NULL;
+                 bool found_native = false, found_sysv;
+                 unsigned c = 1;
+-                const char *argv[6] = { "/sbin/chkconfig", NULL, NULL, NULL, NULL };
++                const char *argv[6] = { "/usr/sbin/update-rc.d", NULL, NULL, NULL, NULL };
+                 char **k, *l;
+                 int j;
+                 pid_t pid;
+@@ -4042,9 +4042,6 @@ static int enable_sysv_units(char **args
+ 
+                 name = args[f];
+ 
+-                if (!endswith(name, ".service"))
+-                        continue;
+-
+                 if (path_is_absolute(name))
+                         continue;
+ 
+@@ -4067,9 +4064,6 @@ static int enable_sysv_units(char **args
+                                 break;
+                 }
+ 
+-                if (found_native)
+-                        continue;
+-
+                 if (!isempty(arg_root))
+                         asprintf(&p, "%s/" SYSTEM_SYSVINIT_PATH "/%s", arg_root, name);
+                 else
+@@ -4079,24 +4073,22 @@ static int enable_sysv_units(char **args
+                         goto finish;
+                 }
+ 
+-                p[strlen(p) - sizeof(".service") + 1] = 0;
++                if (endswith(name, ".service"))
++                        p[strlen(p) - sizeof(".service") + 1] = 0;
+                 found_sysv = access(p, F_OK) >= 0;
+ 
+                 if (!found_sysv)
+                         continue;
+ 
+-                /* Mark this entry, so that we don't try enabling it as native unit */
+-                args[f] = (char*) "";
+-
+-                log_info("%s is not a native service, redirecting to /sbin/chkconfig.", name);
++                if (!found_native) {
++                        /* Mark this entry, so that we don't try enabling it as native unit */
++                        args[f] = (char*) "";
++                }
+ 
+-                if (!isempty(arg_root))
+-                        argv[c++] = q = strappend("--root=", arg_root);
++                log_info("Synchronizing state for %s with sysvinit using update-rc.d...", name);
+ 
+                 argv[c++] = path_get_file_name(p);
+-                argv[c++] =
+-                        streq(verb, "enable") ? "on" :
+-                        streq(verb, "disable") ? "off" : "--level=5";
++                argv[c++] = verb;
+                 argv[c] = NULL;
+ 
+                 l = strv_join((char**)argv, " ");
+@@ -4162,7 +4154,6 @@ finish:
+ 
+         args[t] = NULL;
+ 
+-#endif
+         return r;
+ }
+ 
+--- systemd-204.orig/src/timedate/org.freedesktop.timedate1.service
++++ systemd-204/src/timedate/org.freedesktop.timedate1.service
+@@ -7,6 +7,6 @@
+ 
+ [D-BUS Service]
+ Name=org.freedesktop.timedate1
+-Exec=/bin/false
++Exec=/lib/systemd/systemd-timedated
+ User=root
+ SystemdService=dbus-org.freedesktop.timedate1.service
+--- systemd-204.orig/src/timedate/timedated.c
++++ systemd-204/src/timedate/timedated.c
+@@ -183,6 +183,12 @@ static int read_data(void) {
+                 }
+         }
+ 
++        r = read_one_line_file("/etc/timezone", &tz.zone);
++        if (r < 0) {
++                if (r != -ENOENT)
++                        log_warning("Failed to read /etc/timezone: %s", strerror(-r));
++        }
++
+ have_timezone:
+         if (isempty(tz.zone)) {
+                 free(tz.zone);
+@@ -198,10 +204,15 @@ static int write_data_timezone(void) {
+         int r = 0;
+         _cleanup_free_ char *p = NULL;
+ 
++        struct stat st;
++
+         if (!tz.zone) {
+                 if (unlink("/etc/localtime") < 0 && errno != ENOENT)
+                         r = -errno;
+ 
++                if (unlink("/etc/timezone") < 0 && errno != ENOENT)
++                        r = -errno;
++
+                 return r;
+         }
+ 
+@@ -213,6 +224,13 @@ static int write_data_timezone(void) {
+         if (r < 0)
+                 return r;
+ 
++        if (stat("/etc/timezone", &st) == 0 && S_ISREG(st.st_mode)) {
++                r = write_string_file_atomic("/etc/timezone", tz.zone);
++                if (r < 0)
++                        return r;
++        }
++
++
+         return 0;
+ }
+ 
+--- /dev/null
++++ systemd-204/src/udev/.vimrc
+@@ -0,0 +1,4 @@
++" 'set exrc' in ~/.vimrc will read .vimrc from the current directory
++set tabstop=8
++set shiftwidth=8
++set expandtab
+--- systemd-204.orig/src/udev/udev-event.c
++++ systemd-204/src/udev/udev-event.c
+@@ -750,6 +750,7 @@ static int rename_netif(struct udev_even
+         struct udev_device *dev = event->dev;
+         int sk;
+         struct ifreq ifr;
++        int loop;
+         int err;
+ 
+         log_debug("changing net interface name from '%s' to '%s'\n",
+@@ -766,12 +767,49 @@ static int rename_netif(struct udev_even
+         strscpy(ifr.ifr_name, IFNAMSIZ, udev_device_get_sysname(dev));
+         strscpy(ifr.ifr_newname, IFNAMSIZ, event->name);
+         err = ioctl(sk, SIOCSIFNAME, &ifr);
+-        if (err >= 0) {
++        if (err == 0) {
+                 print_kmsg("renamed network interface %s to %s\n", ifr.ifr_name, ifr.ifr_newname);
+-        } else {
++                goto out;
++        }
++
++        /* keep trying if the destination interface name already exists */
++        err = -errno;
++        if (err != -EEXIST)
++                goto out;
++
++        /* free our own name, another process may wait for us */
++        snprintf(ifr.ifr_newname, IFNAMSIZ, "rename%u", udev_device_get_ifindex(dev));
++        err = ioctl(sk, SIOCSIFNAME, &ifr);
++        if (err < 0) {
+                 err = -errno;
+-                log_error("error changing net interface name %s to %s: %m\n", ifr.ifr_name, ifr.ifr_newname);
++                goto out;
++        }
++
++        /* log temporary name */
++        print_kmsg("renamed network interface %s to %s\n", ifr.ifr_name, ifr.ifr_newname);
++
++        /* wait a maximum of 90 seconds for our target to become available */
++        strscpy(ifr.ifr_name, IFNAMSIZ, ifr.ifr_newname);
++        strscpy(ifr.ifr_newname, IFNAMSIZ, event->name);
++        loop = 90 * 20;
++        while (loop--) {
++                const struct timespec duration = { 0, 1000 * 1000 * 1000 / 20 };
++
++                nanosleep(&duration, NULL);
++
++                err = ioctl(sk, SIOCSIFNAME, &ifr);
++                if (err == 0) {
++                        print_kmsg("renamed network interface %s to %s\n", ifr.ifr_name, ifr.ifr_newname);
++                        break;
++                }
++                err = -errno;
++                if (err != -EEXIST)
++                        break;
+         }
++
++out:
++        if (err < 0)
++                log_error("error changing net interface name %s to %s: %m\n", ifr.ifr_name, ifr.ifr_newname);
+         close(sk);
+         return err;
+ }
+--- systemd-204.orig/src/udev/udev.conf
++++ systemd-204/src/udev/udev.conf
+@@ -1,3 +1,6 @@
+ # see udev(7) for details
++#
++# udevd is started in the initramfs, so when this file is modified the
++# initramfs should be rebuilt.
+ 
+ #udev_log="info"
+--- systemd-204.orig/src/udev/udevadm-hwdb.c
++++ systemd-204/src/udev/udevadm-hwdb.c
+@@ -569,7 +569,7 @@ static int adm_hwdb(struct udev *udev, i
+                 log_debug("strings dedup'ed: %8zu bytes (%8zu)\n",
+                           trie->strings->dedup_len, trie->strings->dedup_count);
+ 
+-                if (asprintf(&hwdb_bin, "%s/etc/udev/hwdb.bin", root) < 0) {
++                if (asprintf(&hwdb_bin, "%s/" UDEVLIBEXECDIR "/hwdb.bin", root) < 0) {
+                         rc = EXIT_FAILURE;
+                         goto out;
+                 }
+--- /dev/null
++++ systemd-204/test/Makefile
+@@ -0,0 +1,20 @@
++# Just a little hook script to easy building when in this directory
++.PHONY: all check clean
++
++all:
++	$(MAKE) -C ..
++
++clean:
++	@for i in TEST-[0-9]*; do \
++		[ -d $$i ] || continue ; \
++		[ -f $$i/Makefile ] || continue ; \
++		make -C $$i clean ; \
++	done
++
++check:
++	$(MAKE) -C .. all
++	@for i in TEST-[0-9]*; do \
++		[ -d $$i ] || continue ; \
++		[ -f $$i/Makefile ] || continue ; \
++		make -C $$i all ; \
++	done
+--- /dev/null
++++ systemd-204/test/README.testsuite
+@@ -0,0 +1,35 @@
++The extended testsuite only works with uid=0. It contains of several
++subdirectories named "test/TEST-??-*", which are run one by one.
++
++To run the extended testsuite do the following:
++
++$ make all
++$ cd test
++$ sudo make clean check
++...
++make[1]: Entering directory `/mnt/data/harald/git/systemd/test/TEST-01-BASIC'
++Making all in .
++Making all in po
++Making all in docs/libudev
++Making all in docs/gudev
++TEST: Basic systemd setup [OK]
++make[1]: Leaving directory `/mnt/data/harald/git/systemd/test/TEST-01-BASIC'
++...
++
++If one of the tests fails, then $subdir/test.log contains the log file of
++the test.
++
++To debug a special testcase of the testsuite do:
++
++$ make all
++$ cd test/TEST-01-BASIC
++$ sudo make clean setup run
++
++If you want to log in the testsuite virtual machine, you can specify
++additional kernel command line parameter with $DEBUGFAIL.
++
++$ sudo make DEBUGFAIL="systemd.unit=multi-user.target" clean setup run
++
++you can even skip the "clean" and "setup" if you want to run the machine again.
++
++$ sudo make DEBUGFAIL="systemd.unit=multi-user.target" run
+--- /dev/null
++++ systemd-204/test/TEST-01-BASIC/Makefile
+@@ -0,0 +1,10 @@
++all:
++	@make -s --no-print-directory -C ../.. all
++	@basedir=../.. TEST_BASE_DIR=../ ./test.sh --all
++setup:
++	@make --no-print-directory -C ../.. all
++	@basedir=../.. TEST_BASE_DIR=../ ./test.sh --setup
++clean:
++	@basedir=../.. TEST_BASE_DIR=../ ./test.sh --clean
++run:
++	@basedir=../.. TEST_BASE_DIR=../ ./test.sh --run
+--- /dev/null
++++ systemd-204/test/TEST-01-BASIC/test.sh
+@@ -0,0 +1,244 @@
++#!/bin/bash
++# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
++# ex: ts=8 sw=4 sts=4 et filetype=sh
++TEST_DESCRIPTION="Basic systemd setup"
++
++. $TEST_BASE_DIR/test-functions
++
++# Uncomment this to debug failures
++#DEBUGFAIL="systemd.unit=multi-user.target"
++DEBUGTOOLS="df free ls stty cat ps ln ip route dmesg dhclient mkdir cp ping dhclient strace less grep id tty touch du sort"
++
++run_qemu() {
++    # TODO: qemu wrapper script: http://www.spinics.net/lists/kvm/msg72389.html
++    qemu-kvm \
++        -hda $TESTDIR/rootdisk.img \
++        -m 512M -nographic \
++        -net none -kernel /boot/vmlinuz-$KERNEL_VER \
++        -append "root=/dev/sda1 systemd.log_level=debug raid=noautodetect loglevel=2 init=/usr/lib/systemd/systemd ro console=ttyS0,115200n81 selinux=0 $DEBUGFAIL" || return 1
++
++    ret=1
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    [[ -e $TESTDIR/root/testok ]] && ret=0
++    cp -a $TESTDIR/root/failed $TESTDIR
++    cp -a $TESTDIR/root/var/log/journal $TESTDIR
++    umount $TESTDIR/root
++    cat $TESTDIR/failed
++    ls -l $TESTDIR/journal/*/*.journal
++    test -s $TESTDIR/failed && ret=$(($ret+1))
++    return $ret
++}
++
++
++run_nspawn() {
++    ../../systemd-nspawn -b -D $TESTDIR/nspawn-root /usr/lib/systemd/systemd
++    ret=1
++    [[ -e $TESTDIR/nspawn-root/testok ]] && ret=0
++    cp -a $TESTDIR/nspawn-root/failed $TESTDIR
++    cp -a $TESTDIR/nspawn-root/var/log/journal $TESTDIR
++    cat $TESTDIR/failed
++    ls -l $TESTDIR/journal/*/*.journal
++    test -s $TESTDIR/failed && ret=$(($ret+1))
++    return $ret
++}
++
++
++test_run() {
++    if check_qemu ; then
++        run_qemu || return 1
++    else
++        dwarn "can't run qemu-kvm, skipping"
++    fi
++    if check_nspawn; then
++        run_nspawn || return 1
++    else
++        dwarn "can't run systemd-nspawn, skipping"
++    fi
++    return 0
++}
++
++test_setup() {
++    rm -f $TESTDIR/rootdisk.img
++    # Create the blank file to use as a root filesystem
++    dd if=/dev/null of=$TESTDIR/rootdisk.img bs=1M seek=200
++    LOOPDEV=$(losetup --show -P -f $TESTDIR/rootdisk.img)
++    [ -b $LOOPDEV ] || return 1
++    echo "LOOPDEV=$LOOPDEV" >> $STATEFILE
++    sfdisk -C 6400 -H 2 -S 32 -L $LOOPDEV <<EOF
++,3200
++,
++EOF
++
++    mkfs.ext3 -L systemd ${LOOPDEV}p1
++    echo -n test >$TESTDIR/keyfile
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    mkdir -p $TESTDIR/root/run
++
++    # Create what will eventually be our root filesystem onto an overlay
++    (
++        LOG_LEVEL=5
++        initdir=$TESTDIR/root
++
++        # create the basic filesystem layout
++        setup_basic_dirs
++
++        # install compiled files
++        (cd ../..; make DESTDIR=$initdir install)
++
++        # remove unneeded documentation
++        rm -fr $initdir/usr/share/{man,doc,gtk-doc}
++
++        # install possible missing libraries
++        for i in $initdir/{sbin,bin}/* $initdir/lib/systemd/*; do
++            inst_libs $i
++        done
++
++        # make a journal directory
++        mkdir -p $initdir/var/log/journal
++
++        # install some basic config files
++        inst /etc/sysconfig/init
++        inst /etc/passwd
++        inst /etc/shadow
++        inst /etc/group
++        inst /etc/shells
++        inst /etc/nsswitch.conf
++        inst /etc/pam.conf
++        inst /etc/securetty
++        inst /etc/os-release
++        inst /etc/localtime
++        # we want an empty environment
++        > $initdir/etc/environment
++        > $initdir/etc/machine-id
++
++        # set the hostname
++        echo  systemd-testsuite > $initdir/etc/hostname
++
++        eval $(udevadm info --export --query=env --name=${LOOPDEV}p2)
++
++        cat >$initdir/etc/fstab <<EOF
++LABEL=systemd           /       ext3    rw 0 1
++EOF
++
++        # setup the testsuite target and the test ending service
++        cp $TEST_BASE_DIR/{testsuite.target,end.service} $initdir/etc/systemd/system/
++
++        # setup the testsuite service
++        cat >$initdir/etc/systemd/system/testsuite.service <<EOF
++[Unit]
++Description=Testsuite service
++After=multi-user.target
++
++[Service]
++ExecStart=/bin/bash -c 'set -x; systemctl --failed --no-legend --no-pager > /failed ; echo OK > /testok; while : ;do echo "testsuite service waiting for journal to move to /var/log/journal" > /dev/console ; for i in /var/log/journal/*;do [ -d "\$i" ] && echo "\$i" && break 2; done; sleep 1; done; sleep 1; exit 0;'
++Type=oneshot
++EOF
++
++        mkdir -p $initdir/etc/systemd/system/testsuite.target.wants
++        ln -fs ../testsuite.service $initdir/etc/systemd/system/testsuite.target.wants/testsuite.service
++        ln -fs ../end.service $initdir/etc/systemd/system/testsuite.target.wants/end.service
++
++        # make the testsuite the default target
++        ln -fs testsuite.target $initdir/etc/systemd/system/default.target
++        mkdir -p $initdir/etc/rc.d
++        cat >$initdir/etc/rc.d/rc.local <<EOF
++#!/bin/bash
++exit 0
++EOF
++        chmod 0755 $initdir/etc/rc.d/rc.local
++        # install basic tools needed
++        dracut_install sh bash setsid loadkeys setfont \
++            login sushell sulogin gzip sleep echo mount umount cryptsetup
++        dracut_install dmsetup modprobe
++
++        # install libnss_files for login
++        inst_libdir_file "libnss_files*"
++
++        # install dbus and pam
++        find \
++            /etc/dbus-1 \
++            /etc/pam.d \
++            /etc/security \
++            /lib64/security \
++            /lib/security -xtype f \
++            | while read file; do
++            inst $file
++        done
++
++        # install dbus socket and service file
++        inst /usr/lib/systemd/system/dbus.socket
++        inst /usr/lib/systemd/system/dbus.service
++
++        # install basic keyboard maps and fonts
++        for i in \
++            /usr/lib/kbd/consolefonts/latarcyrheb-sun16* \
++            /usr/lib/kbd/keymaps/include/* \
++            /usr/lib/kbd/keymaps/i386/include/* \
++            /usr/lib/kbd/keymaps/i386/qwerty/us.*; do
++                [[ -f $i ]] || continue
++                inst $i
++        done
++
++        # some basic terminfo files
++        for _terminfodir in /lib/terminfo /etc/terminfo /usr/share/terminfo; do
++            [ -f ${_terminfodir}/l/linux ] && break
++        done
++        dracut_install -o ${_terminfodir}/l/linux
++
++        # softlink mtab
++        ln -fs /proc/self/mounts $initdir/etc/mtab
++
++        # install any Exec's from the service files
++        egrep -ho '^Exec[^ ]*=[^ ]+' $initdir/lib/systemd/system/*.service \
++            | while read i; do
++            i=${i##Exec*=}; i=${i##-}
++            inst $i
++        done
++
++        # install plymouth, if found... else remove plymouth service files
++        # if [ -x /usr/libexec/plymouth/plymouth-populate-initrd ]; then
++        #     PLYMOUTH_POPULATE_SOURCE_FUNCTIONS="$TEST_BASE_DIR/test-functions" \
++        #         /usr/libexec/plymouth/plymouth-populate-initrd -t $initdir
++        #         dracut_install plymouth plymouthd
++        # else
++        rm -f $initdir/{usr/lib,etc}/systemd/system/plymouth* $initdir/{usr/lib,etc}/systemd/system/*/plymouth*
++        # fi
++
++        # some helper tools for debugging
++        [[ $DEBUGTOOLS ]] && dracut_install $DEBUGTOOLS
++
++        # install ld.so.conf* and run ldconfig
++        cp -a /etc/ld.so.conf* $initdir/etc
++        ldconfig -r "$initdir"
++        ddebug "Strip binaries"
++        find "$initdir" -perm +111 -type f | xargs strip --strip-unneeded | ddebug
++
++        # copy depmod files
++        inst /lib/modules/$KERNEL_VER/modules.order
++        inst /lib/modules/$KERNEL_VER/modules.builtin
++        # generate module dependencies
++        if [[ -d $initdir/lib/modules/$KERNEL_VER ]] && \
++            ! depmod -a -b "$initdir" $KERNEL_VER; then
++                dfatal "\"depmod -a $KERNEL_VER\" failed."
++                exit 1
++        fi
++    )
++    rm -fr $TESTDIR/nspawn-root
++    ddebug "cp -ar $TESTDIR/root $TESTDIR/nspawn-root"
++    cp -ar $TESTDIR/root $TESTDIR/nspawn-root
++    # we don't mount in the nspawn root
++    rm -f $TESTDIR/nspawn-root/etc/fstab
++
++    ddebug "umount $TESTDIR/root"
++    umount $TESTDIR/root
++}
++
++test_cleanup() {
++    umount $TESTDIR/root 2>/dev/null
++    [[ $LOOPDEV ]] && losetup -d $LOOPDEV
++    return 0
++}
++
++do_test "$@"
+--- /dev/null
++++ systemd-204/test/TEST-02-CRYPTSETUP/test.sh
+@@ -0,0 +1,256 @@
++#!/bin/bash
++# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
++# ex: ts=8 sw=4 sts=4 et filetype=sh
++TEST_DESCRIPTION="cryptsetup systemd setup"
++
++. $TEST_BASE_DIR/test-functions
++
++# Uncomment this to debug failures
++#DEBUGFAIL="systemd.unit=multi-user.target"
++DEBUGTOOLS="df free ls stty cat ps ln ip route dmesg dhclient mkdir cp ping dhclient strace less grep id tty touch du sort"
++
++run_qemu() {
++    # TODO: qemu wrapper script: http://www.spinics.net/lists/kvm/msg72389.html
++    qemu-kvm \
++        -hda $TESTDIR/rootdisk.img \
++        -m 512M -nographic \
++        -net none -kernel /boot/vmlinuz-$KERNEL_VER \
++        -append "root=/dev/sda1 systemd.log_level=debug raid=noautodetect loglevel=2 init=/usr/lib/systemd/systemd ro console=ttyS0,115200n81 selinux=0 $DEBUGFAIL" || return 1
++
++    ret=1
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    [[ -e $TESTDIR/root/testok ]] && ret=0
++    cp -a $TESTDIR/root/failed $TESTDIR
++    cryptsetup luksOpen ${LOOPDEV}p2 varcrypt <$TESTDIR/keyfile
++    mount /dev/mapper/varcrypt $TESTDIR/root/var
++    cp -a $TESTDIR/root/var/log/journal $TESTDIR
++    umount $TESTDIR/root/var
++    umount $TESTDIR/root
++    cryptsetup luksClose /dev/mapper/varcrypt
++    cat $TESTDIR/failed
++    ls -l $TESTDIR/journal/*/*.journal
++    test -s $TESTDIR/failed && ret=$(($ret+1))
++    return $ret
++}
++
++
++test_run() {
++    if check_qemu ; then
++        run_qemu || return 1
++    else
++        dwarn "can't run qemu-kvm, skipping"
++    fi
++    return 0
++}
++
++test_setup() {
++    rm -f $TESTDIR/rootdisk.img
++    # Create the blank file to use as a root filesystem
++    dd if=/dev/null of=$TESTDIR/rootdisk.img bs=1M seek=200
++    LOOPDEV=$(losetup --show -P -f $TESTDIR/rootdisk.img)
++    [ -b $LOOPDEV ] || return 1
++    echo "LOOPDEV=$LOOPDEV" >> $STATEFILE
++    sfdisk -C 6400 -H 2 -S 32 -L $LOOPDEV <<EOF
++,3200
++,
++EOF
++
++    mkfs.ext3 -L systemd ${LOOPDEV}p1
++    echo -n test >$TESTDIR/keyfile
++    cryptsetup -q luksFormat ${LOOPDEV}p2 $TESTDIR/keyfile
++    cryptsetup luksOpen ${LOOPDEV}p2 varcrypt <$TESTDIR/keyfile
++    mkfs.ext3 -L var /dev/mapper/varcrypt
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    mkdir -p $TESTDIR/root/run
++    mkdir -p $TESTDIR/root/var
++    mount /dev/mapper/varcrypt $TESTDIR/root/var
++
++    # Create what will eventually be our root filesystem onto an overlay
++    (
++        LOG_LEVEL=5
++        initdir=$TESTDIR/root
++
++        # create the basic filesystem layout
++        setup_basic_dirs
++
++        # install compiled files
++        (cd ../..; make DESTDIR=$initdir install)
++
++        # remove unneeded documentation
++        rm -fr $initdir/usr/share/{man,doc,gtk-doc}
++
++        # install possible missing libraries
++        for i in $initdir/{sbin,bin}/* $initdir/lib/systemd/*; do
++            inst_libs $i
++        done
++
++        # make a journal directory
++        mkdir -p $initdir/var/log/journal
++
++        # install some basic config files
++        inst /etc/sysconfig/init
++        inst /etc/passwd
++        inst /etc/shadow
++        inst /etc/group
++        inst /etc/shells
++        inst /etc/nsswitch.conf
++        inst /etc/pam.conf
++        inst /etc/securetty
++        inst /etc/os-release
++        inst /etc/localtime
++        # we want an empty environment
++        > $initdir/etc/environment
++        > $initdir/etc/machine-id
++
++        # set the hostname
++        echo  systemd-testsuite > $initdir/etc/hostname
++
++        eval $(udevadm info --export --query=env --name=/dev/mapper/varcrypt)
++        eval $(udevadm info --export --query=env --name=${LOOPDEV}p2)
++
++        cat >$initdir/etc/crypttab <<EOF
++$DM_NAME UUID=$ID_FS_UUID /etc/varkey
++EOF
++        echo -n test > $initdir/etc/varkey
++        cat $initdir/etc/crypttab | ddebug
++
++        cat >$initdir/etc/fstab <<EOF
++LABEL=systemd           /       ext3    rw 0 1
++/dev/mapper/varcrypt    /var    ext3    defaults 0 1
++EOF
++
++        # setup the testsuite target and the test ending service
++        cp $TEST_BASE_DIR/{testsuite.target,end.service} $initdir/etc/systemd/system/
++
++        # setup the testsuite service
++        cat >$initdir/etc/systemd/system/testsuite.service <<EOF
++[Unit]
++Description=Testsuite service
++After=multi-user.target
++
++[Service]
++ExecStart=/bin/bash -c 'set -x; systemctl --failed --no-legend --no-pager > /failed ; echo OK > /testok; while : ;do systemd-cat echo "testsuite service waiting for /var/log/journal" ; echo "testsuite service waiting for journal to move to /var/log/journal" > /dev/console ; for i in /var/log/journal/*;do [ -d "\$i" ] && echo "\$i" && break 2; done; sleep 1; done; sleep 1; exit 0;'
++Type=oneshot
++EOF
++
++        mkdir -p $initdir/etc/systemd/system/testsuite.target.wants
++        ln -fs ../testsuite.service $initdir/etc/systemd/system/testsuite.target.wants/testsuite.service
++        ln -fs ../end.service $initdir/etc/systemd/system/testsuite.target.wants/end.service
++
++        # make the testsuite the default target
++        ln -fs testsuite.target $initdir/etc/systemd/system/default.target
++        mkdir -p $initdir/etc/rc.d
++        cat >$initdir/etc/rc.d/rc.local <<EOF
++#!/bin/bash
++exit 0
++EOF
++        chmod 0755 $initdir/etc/rc.d/rc.local
++        # install basic tools needed
++        dracut_install sh bash setsid loadkeys setfont \
++            login sushell sulogin gzip sleep echo mount umount cryptsetup
++        dracut_install dmsetup modprobe
++
++        instmods dm_crypt =crypto
++
++        type -P dmeventd >/dev/null && dracut_install dmeventd
++
++        inst_libdir_file "libdevmapper-event.so*"
++
++        inst_rules 10-dm.rules 13-dm-disk.rules 95-dm-notify.rules
++
++        # install libnss_files for login
++        inst_libdir_file "libnss_files*"
++
++        # install dbus and pam
++        find \
++            /etc/dbus-1 \
++            /etc/pam.d \
++            /etc/security \
++            /lib64/security \
++            /lib/security -xtype f \
++            | while read file; do
++            inst $file
++        done
++
++        # install dbus socket and service file
++        inst /usr/lib/systemd/system/dbus.socket
++        inst /usr/lib/systemd/system/dbus.service
++
++        # install basic keyboard maps and fonts
++        for i in \
++            /usr/lib/kbd/consolefonts/latarcyrheb-sun16* \
++            /usr/lib/kbd/keymaps/include/* \
++            /usr/lib/kbd/keymaps/i386/include/* \
++            /usr/lib/kbd/keymaps/i386/qwerty/us.*; do
++                [[ -f $i ]] || continue
++                inst $i
++        done
++
++        # some basic terminfo files
++        for _terminfodir in /lib/terminfo /etc/terminfo /usr/share/terminfo; do
++            [ -f ${_terminfodir}/l/linux ] && break
++        done
++        dracut_install -o ${_terminfodir}/l/linux
++
++        # softlink mtab
++        ln -fs /proc/self/mounts $initdir/etc/mtab
++
++        # install any Exec's from the service files
++        egrep -ho '^Exec[^ ]*=[^ ]+' $initdir/lib/systemd/system/*.service \
++            | while read i; do
++            i=${i##Exec*=}; i=${i##-}
++            inst $i
++        done
++
++        # install plymouth, if found... else remove plymouth service files
++        # if [ -x /usr/libexec/plymouth/plymouth-populate-initrd ]; then
++        #     PLYMOUTH_POPULATE_SOURCE_FUNCTIONS="$TEST_BASE_DIR/test-functions" \
++        #         /usr/libexec/plymouth/plymouth-populate-initrd -t $initdir
++        #         dracut_install plymouth plymouthd
++        # else
++        rm -f $initdir/{usr/lib,etc}/systemd/system/plymouth* $initdir/{usr/lib,etc}/systemd/system/*/plymouth*
++        # fi
++
++        # some helper tools for debugging
++        [[ $DEBUGTOOLS ]] && dracut_install $DEBUGTOOLS
++
++        # install ld.so.conf* and run ldconfig
++        cp -a /etc/ld.so.conf* $initdir/etc
++        ldconfig -r "$initdir"
++        ddebug "Strip binaeries"
++        find "$initdir" -perm +111 -type f | xargs strip --strip-unneeded | ddebug
++
++        # copy depmod files
++        inst /lib/modules/$KERNEL_VER/modules.order
++        inst /lib/modules/$KERNEL_VER/modules.builtin
++        # generate module dependencies
++        if [[ -d $initdir/lib/modules/$KERNEL_VER ]] && \
++            ! depmod -a -b "$initdir" $KERNEL_VER; then
++                dfatal "\"depmod -a $KERNEL_VER\" failed."
++                exit 1
++        fi
++    )
++    rm -fr $TESTDIR/nspawn-root
++    ddebug "cp -ar $TESTDIR/root $TESTDIR/nspawn-root"
++    cp -ar $TESTDIR/root $TESTDIR/nspawn-root
++    # we don't mount in the nspawn root
++    rm -fr $TESTDIR/nspawn-root/etc/fstab
++
++    ddebug "umount $TESTDIR/root/var"
++    umount $TESTDIR/root/var
++    cryptsetup luksClose /dev/mapper/varcrypt
++    ddebug "umount $TESTDIR/root"
++    umount $TESTDIR/root
++}
++
++test_cleanup() {
++    umount $TESTDIR/root/var 2>/dev/null
++    [[ -b /dev/mapper/varcrypt ]] && cryptsetup luksClose /dev/mapper/varcrypt
++    umount $TESTDIR/root 2>/dev/null
++    [[ $LOOPDEV ]] && losetup -d $LOOPDEV
++    return 0
++}
++
++do_test "$@"
+--- /dev/null
++++ systemd-204/test/TEST-03-JOBS/test-jobs.sh
+@@ -0,0 +1,41 @@
++#!/bin/bash -x
++
++# Test merging of a --ignore-dependencies job into a previously
++# installed job.
++
++systemctl start --no-block hello-after-sleep.target
++# sleep is now running, hello/start is waiting. Verify that:
++systemctl list-jobs > /root/list-jobs.txt
++grep 'sleep\.service.*running' /root/list-jobs.txt || exit 1
++grep 'hello\.service.*waiting' /root/list-jobs.txt || exit 1
++
++# This is supposed to finish quickly, not wait for sleep to finish.
++START_SEC=$(date -u '+%s')
++systemctl start --ignore-dependencies hello
++END_SEC=$(date -u '+%s')
++ELAPSED=$(($END_SEC-$START_SEC))
++
++[ "$ELAPSED" -lt 3 ] || exit 1
++
++# sleep should still be running, hello not.
++systemctl list-jobs > /root/list-jobs.txt
++grep 'sleep\.service.*running' /root/list-jobs.txt || exit 1
++grep 'hello\.service' /root/list-jobs.txt && exit 1
++
++# TODO: add more job queueing/merging tests here.
++
++# Test for irreversible jobs
++systemctl start unstoppable.service || exit 1
++
++# This is expected to fail with 'job cancelled'
++systemctl stop unstoppable.service && exit 1
++# But this should succeed
++systemctl stop --irreversible unstoppable.service || exit 1
++
++# We're going to shutdown soon. Let's see if it succeeds when
++# there's an active service that tries to be unstoppable.
++# Shutdown of the container/VM will hang if not.
++systemctl start unstoppable.service || exit 1
++
++touch /testok
++exit 0
+--- /dev/null
++++ systemd-204/test/TEST-03-JOBS/test.sh
+@@ -0,0 +1,249 @@
++#!/bin/bash
++# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
++# ex: ts=8 sw=4 sts=4 et filetype=sh
++TEST_DESCRIPTION="Job-related tests"
++
++. $TEST_BASE_DIR/test-functions
++
++# Uncomment this to debug failures
++#DEBUGFAIL="systemd.unit=multi-user.target"
++DEBUGTOOLS="df free ls stty cat ps ln ip route dmesg dhclient mkdir cp ping dhclient strace less grep id tty touch du sort"
++
++run_qemu() {
++    # TODO: qemu wrapper script: http://www.spinics.net/lists/kvm/msg72389.html
++    qemu-kvm \
++        -hda $TESTDIR/rootdisk.img \
++        -m 512M -nographic \
++        -net none -kernel /boot/vmlinuz-$KERNEL_VER \
++        -append "root=/dev/sda1 systemd.log_level=debug raid=noautodetect loglevel=2 init=/usr/lib/systemd/systemd ro console=ttyS0,115200n81 selinux=0 $DEBUGFAIL" || return 1
++
++    ret=1
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    [[ -e $TESTDIR/root/testok ]] && ret=0
++    cp -a $TESTDIR/root/failed $TESTDIR
++    cp -a $TESTDIR/root/var/log/journal $TESTDIR
++    umount $TESTDIR/root
++    cat $TESTDIR/failed
++    ls -l $TESTDIR/journal/*/*.journal
++    test -s $TESTDIR/failed && ret=$(($ret+1))
++    return $ret
++}
++
++
++run_nspawn() {
++    ../../systemd-nspawn -b -D $TESTDIR/nspawn-root /usr/lib/systemd/systemd
++    ret=1
++    [[ -e $TESTDIR/nspawn-root/testok ]] && ret=0
++    cp -a $TESTDIR/nspawn-root/failed $TESTDIR
++    cp -a $TESTDIR/nspawn-root/var/log/journal $TESTDIR
++    cat $TESTDIR/failed
++    ls -l $TESTDIR/journal/*/*.journal
++    test -s $TESTDIR/failed && ret=$(($ret+1))
++    return $ret
++}
++
++
++test_run() {
++    if check_qemu ; then
++        run_qemu || return 1
++    else
++        dwarn "can't run qemu-kvm, skipping"
++    fi
++    if check_nspawn; then
++        run_nspawn || return 1
++    else
++        dwarn "can't run systemd-nspawn, skipping"
++    fi
++    return 0
++}
++
++test_setup() {
++    rm -f $TESTDIR/rootdisk.img
++    # Create the blank file to use as a root filesystem
++    dd if=/dev/null of=$TESTDIR/rootdisk.img bs=1M seek=200
++    LOOPDEV=$(losetup --show -P -f $TESTDIR/rootdisk.img)
++    [ -b $LOOPDEV ] || return 1
++    echo "LOOPDEV=$LOOPDEV" >> $STATEFILE
++    sfdisk -C 6400 -H 2 -S 32 -L $LOOPDEV <<EOF
++,3200
++,
++EOF
++
++    mkfs.ext3 -L systemd ${LOOPDEV}p1
++    echo -n test >$TESTDIR/keyfile
++    mkdir -p $TESTDIR/root
++    mount ${LOOPDEV}p1 $TESTDIR/root
++    mkdir -p $TESTDIR/root/run
++
++    # Create what will eventually be our root filesystem onto an overlay
++    (
++        LOG_LEVEL=5
++        initdir=$TESTDIR/root
++
++        # create the basic filesystem layout
++        setup_basic_dirs
++
++        # install compiled files
++        (cd ../..; make DESTDIR=$initdir install)
++
++        # remove unneeded documentation
++        rm -fr $initdir/usr/share/{man,doc,gtk-doc}
++
++        # install possible missing libraries
++        for i in $initdir/{sbin,bin}/* $initdir/lib/systemd/*; do
++            inst_libs $i
++        done
++
++        # make a journal directory
++        mkdir -p $initdir/var/log/journal
++
++        # install some basic config files
++        inst /etc/sysconfig/init
++        inst /etc/passwd
++        inst /etc/shadow
++        inst /etc/group
++        inst /etc/shells
++        inst /etc/nsswitch.conf
++        inst /etc/pam.conf
++        inst /etc/securetty
++        inst /etc/os-release
++        inst /etc/localtime
++        # we want an empty environment
++        > $initdir/etc/environment
++        > $initdir/etc/machine-id
++
++        # set the hostname
++        echo  systemd-testsuite > $initdir/etc/hostname
++
++        eval $(udevadm info --export --query=env --name=${LOOPDEV}p2)
++
++        cat >$initdir/etc/fstab <<EOF
++LABEL=systemd           /       ext3    rw 0 1
++EOF
++
++        # setup the testsuite target and the test ending service
++        cp $TEST_BASE_DIR/{testsuite.target,end.service} $initdir/etc/systemd/system/
++
++        # setup the testsuite service
++        cat >$initdir/etc/systemd/system/testsuite.service <<EOF
++[Unit]
++Description=Testsuite service
++After=multi-user.target
++
++[Service]
++ExecStart=/test-jobs.sh
++Type=oneshot
++EOF
++
++        # copy the units used by this test
++        cp $TEST_BASE_DIR/{hello.service,sleep.service,hello-after-sleep.target,unstoppable.service} \
++            $initdir/etc/systemd/system
++        cp test-jobs.sh $initdir/
++
++        mkdir -p $initdir/etc/systemd/system/testsuite.target.wants
++        ln -fs ../testsuite.service $initdir/etc/systemd/system/testsuite.target.wants/testsuite.service
++        ln -fs ../end.service $initdir/etc/systemd/system/testsuite.target.wants/end.service
++
++        # make the testsuite the default target
++        ln -fs testsuite.target $initdir/etc/systemd/system/default.target
++        mkdir -p $initdir/etc/rc.d
++        cat >$initdir/etc/rc.d/rc.local <<EOF
++#!/bin/bash
++exit 0
++EOF
++        chmod 0755 $initdir/etc/rc.d/rc.local
++        # install basic tools needed
++        dracut_install sh bash setsid loadkeys setfont \
++            login sushell sulogin gzip sleep echo mount umount cryptsetup date
++        dracut_install dmsetup modprobe
++
++        # install libnss_files for login
++        inst_libdir_file "libnss_files*"
++
++        # install dbus and pam
++        find \
++            /etc/dbus-1 \
++            /etc/pam.d \
++            /etc/security \
++            /lib64/security \
++            /lib/security -xtype f \
++            | while read file; do
++            inst $file
++        done
++
++        # install dbus socket and service file
++        inst /usr/lib/systemd/system/dbus.socket
++        inst /usr/lib/systemd/system/dbus.service
++
++        # install basic keyboard maps and fonts
++        for i in \
++            /usr/lib/kbd/consolefonts/latarcyrheb-sun16* \
++            /usr/lib/kbd/keymaps/include/* \
++            /usr/lib/kbd/keymaps/i386/include/* \
++            /usr/lib/kbd/keymaps/i386/qwerty/us.*; do
++                [[ -f $i ]] || continue
++                inst $i
++        done
++
++        # some basic terminfo files
++        for _terminfodir in /lib/terminfo /etc/terminfo /usr/share/terminfo; do
++            [ -f ${_terminfodir}/l/linux ] && break
++        done
++        dracut_install -o ${_terminfodir}/l/linux
++
++        # softlink mtab
++        ln -fs /proc/self/mounts $initdir/etc/mtab
++
++        # install any Exec's from the service files
++        egrep -ho '^Exec[^ ]*=[^ ]+' $initdir/lib/systemd/system/*.service \
++            | while read i; do
++            i=${i##Exec*=}; i=${i##-}
++            inst $i
++        done
++
++        # install plymouth, if found... else remove plymouth service files
++        # if [ -x /usr/libexec/plymouth/plymouth-populate-initrd ]; then
++        #     PLYMOUTH_POPULATE_SOURCE_FUNCTIONS="$TEST_BASE_DIR/test-functions" \
++        #         /usr/libexec/plymouth/plymouth-populate-initrd -t $initdir
++        #         dracut_install plymouth plymouthd
++        # else
++        rm -f $initdir/{usr/lib,etc}/systemd/system/plymouth* $initdir/{usr/lib,etc}/systemd/system/*/plymouth*
++        # fi
++
++        # some helper tools for debugging
++        [[ $DEBUGTOOLS ]] && dracut_install $DEBUGTOOLS
++
++        # install ld.so.conf* and run ldconfig
++        cp -a /etc/ld.so.conf* $initdir/etc
++        ldconfig -r "$initdir"
++        ddebug "Strip binaeries"
++        find "$initdir" -perm +111 -type f | xargs strip --strip-unneeded | ddebug
++
++        # copy depmod files
++        inst /lib/modules/$KERNEL_VER/modules.order
++        inst /lib/modules/$KERNEL_VER/modules.builtin
++        # generate module dependencies
++        if [[ -d $initdir/lib/modules/$KERNEL_VER ]] && \
++            ! depmod -a -b "$initdir" $KERNEL_VER; then
++                dfatal "\"depmod -a $KERNEL_VER\" failed."
++                exit 1
++        fi
++    )
++    rm -fr $TESTDIR/nspawn-root
++    ddebug "cp -ar $TESTDIR/root $TESTDIR/nspawn-root"
++    cp -ar $TESTDIR/root $TESTDIR/nspawn-root
++    # we don't mount in the nspawn root
++    rm -fr $TESTDIR/nspawn-root/etc/fstab
++
++    ddebug "umount $TESTDIR/root"
++    umount $TESTDIR/root
++}
++
++test_cleanup() {
++    umount $TESTDIR/root 2>/dev/null
++    [[ $LOOPDEV ]] && losetup -d $LOOPDEV
++    return 0
++}
++
++do_test "$@"
+--- /dev/null
++++ systemd-204/test/a.service
+@@ -0,0 +1,7 @@
++[Unit]
++Description=A
++Requires=b.service
++Before=b.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/b.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=B
++Wants=f.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/c.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=C
++Requires=a.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/d.service
+@@ -0,0 +1,8 @@
++[Unit]
++Description=D:Cyclic
++After=b.service
++Before=a.service
++Requires=a.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/e.service
+@@ -0,0 +1,8 @@
++[Unit]
++Description=E:Cyclic
++After=b.service
++Before=a.service
++Wants=a.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/end.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=End the test
++After=testsuite.service
++
++[Service]
++ExecStart=/usr/bin/systemctl poweroff --no-block
+--- /dev/null
++++ systemd-204/test/f.service
+@@ -0,0 +1,5 @@
++[Unit]
++Description=F
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/g.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=G
++Conflicts=e.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/h.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=H
++Wants=g.service
++
++[Service]
++ExecStart=/bin/true
+--- /dev/null
++++ systemd-204/test/hello-after-sleep.target
+@@ -0,0 +1,5 @@
++[Unit]
++Description=Sleep for a minute, then say hello.
++Wants=sleep.service hello.service
++After=sleep.service
++Before=hello.service
+--- /dev/null
++++ systemd-204/test/hello.service
+@@ -0,0 +1,5 @@
++[Unit]
++Description=Hello World
++
++[Service]
++ExecStart=/bin/echo "Hello World"
+--- /dev/null
++++ systemd-204/test/sleep.service
+@@ -0,0 +1,6 @@
++[Unit]
++Description=Sleep for 1 minute
++
++[Service]
++Type=oneshot
++ExecStart=/bin/sleep 60
+--- /dev/null
++++ systemd-204/test/test-functions
+@@ -0,0 +1,864 @@
++#!/bin/bash
++# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
++# ex: ts=8 sw=4 sts=4 et filetype=sh
++PATH=/sbin:/bin:/usr/sbin:/usr/bin
++export PATH
++
++KERNEL_VER=${KERNEL_VER-$(uname -r)}
++KERNEL_MODS="/lib/modules/$KERNEL_VER/"
++
++setup_basic_dirs() {
++    for d in usr/bin usr/sbin bin etc lib "$libdir" sbin tmp usr var var/log dev proc sys sysroot root run run/lock run/initramfs; do
++        if [ -L "/$d" ]; then
++            inst_symlink "/$d"
++        else
++            inst_dir "/$d"
++        fi
++    done
++
++    ln -sfn /run "$initdir/var/run"
++    ln -sfn /run/lock "$initdir/var/lock"
++}
++
++inst_libs() {
++    local _bin=$1
++    local _so_regex='([^ ]*/lib[^/]*/[^ ]*\.so[^ ]*)'
++    local _file _line
++
++    LC_ALL=C ldd "$_bin" 2>/dev/null | while read _line; do
++        [[ $_line = 'not a dynamic executable' ]] && break
++
++        if [[ $_line =~ $_so_regex ]]; then
++            _file=${BASH_REMATCH[1]}
++            [[ -e ${initdir}/$_file ]] && continue
++            inst_library "$_file"
++            continue
++        fi
++
++        if [[ $_line =~ not\ found ]]; then
++            dfatal "Missing a shared library required by $_bin."
++            dfatal "Run \"ldd $_bin\" to find out what it is."
++            dfatal "$_line"
++            dfatal "dracut cannot create an initrd."
++            exit 1
++        fi
++    done
++}
++
++import_testdir() {
++    STATEFILE=".testdir"
++    [[ -e $STATEFILE ]] && . $STATEFILE
++    if [[ -z "$TESTDIR" ]] || [[ ! -d "$TESTDIR" ]]; then
++        TESTDIR=$(mktemp --tmpdir=/var/tmp -d -t systemd-test.XXXXXX)
++        echo "TESTDIR=\"$TESTDIR\"" > $STATEFILE
++        export TESTDIR
++    fi
++}
++
++## @brief Converts numeric logging level to the first letter of level name.
++#
++# @param lvl Numeric logging level in range from 1 to 6.
++# @retval 1 if @a lvl is out of range.
++# @retval 0 if @a lvl is correct.
++# @result Echoes first letter of level name.
++_lvl2char() {
++    case "$1" in
++        1) echo F;;
++        2) echo E;;
++        3) echo W;;
++        4) echo I;;
++        5) echo D;;
++        6) echo T;;
++        *) return 1;;
++    esac
++}
++
++## @brief Internal helper function for _do_dlog()
++#
++# @param lvl Numeric logging level.
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++#
++# @note This function is not supposed to be called manually. Please use
++# dtrace(), ddebug(), or others instead which wrap this one.
++#
++# This function calls _do_dlog() either with parameter msg, or if
++# none is given, it will read standard input and will use every line as
++# a message.
++#
++# This enables:
++# dwarn "This is a warning"
++# echo "This is a warning" | dwarn
++LOG_LEVEL=4
++
++dlog() {
++    [ -z "$LOG_LEVEL" ] && return 0
++    [ $1 -le $LOG_LEVEL ] || return 0
++    local lvl="$1"; shift
++    local lvlc=$(_lvl2char "$lvl") || return 0
++
++    if [ $# -ge 1 ]; then
++        echo "$lvlc: $*"
++    else
++        while read line; do
++            echo "$lvlc: " "$line"
++        done
++    fi
++}
++
++## @brief Logs message at TRACE level (6)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++dtrace() {
++    set +x
++    dlog 6 "$@"
++    [ -n "$debug" ] && set -x || :
++}
++
++## @brief Logs message at DEBUG level (5)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++ddebug() {
++#    set +x
++    dlog 5 "$@"
++#    [ -n "$debug" ] && set -x || :
++}
++
++## @brief Logs message at INFO level (4)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++dinfo() {
++    set +x
++    dlog 4 "$@"
++    [ -n "$debug" ] && set -x || :
++}
++
++## @brief Logs message at WARN level (3)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++dwarn() {
++    set +x
++    dlog 3 "$@"
++    [ -n "$debug" ] && set -x || :
++}
++
++## @brief Logs message at ERROR level (2)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++derror() {
++#    set +x
++    dlog 2 "$@"
++#    [ -n "$debug" ] && set -x || :
++}
++
++## @brief Logs message at FATAL level (1)
++#
++# @param msg Message.
++# @retval 0 It's always returned, even if logging failed.
++dfatal() {
++    set +x
++    dlog 1 "$@"
++    [ -n "$debug" ] && set -x || :
++}
++
++
++# Generic substring function.  If $2 is in $1, return 0.
++strstr() { [ "${1#*$2*}" != "$1" ]; }
++
++# normalize_path <path>
++# Prints the normalized path, where it removes any duplicated
++# and trailing slashes.
++# Example:
++# $ normalize_path ///test/test//
++# /test/test
++normalize_path() {
++    shopt -q -s extglob
++    set -- "${1//+(\/)//}"
++    shopt -q -u extglob
++    echo "${1%/}"
++}
++
++# convert_abs_rel <from> <to>
++# Prints the relative path, when creating a symlink to <to> from <from>.
++# Example:
++# $ convert_abs_rel /usr/bin/test /bin/test-2
++# ../../bin/test-2
++# $ ln -s $(convert_abs_rel /usr/bin/test /bin/test-2) /usr/bin/test
++convert_abs_rel() {
++    local __current __absolute __abssize __cursize __newpath
++    local -i __i __level
++
++    set -- "$(normalize_path "$1")" "$(normalize_path "$2")"
++
++    # corner case #1 - self looping link
++    [[ "$1" == "$2" ]] && { echo "${1##*/}"; return; }
++
++    # corner case #2 - own dir link
++    [[ "${1%/*}" == "$2" ]] && { echo "."; return; }
++
++    IFS="/" __current=($1)
++    IFS="/" __absolute=($2)
++
++    __abssize=${#__absolute[@]}
++    __cursize=${#__current[@]}
++
++    while [[ ${__absolute[__level]} == ${__current[__level]} ]]
++    do
++        (( __level++ ))
++        if (( __level > __abssize || __level > __cursize ))
++        then
++            break
++        fi
++    done
++
++    for ((__i = __level; __i < __cursize-1; __i++))
++    do
++        if ((__i > __level))
++        then
++            __newpath=$__newpath"/"
++        fi
++        __newpath=$__newpath".."
++    done
++
++    for ((__i = __level; __i < __abssize; __i++))
++    do
++        if [[ -n $__newpath ]]
++        then
++            __newpath=$__newpath"/"
++        fi
++        __newpath=$__newpath${__absolute[__i]}
++    done
++
++    echo "$__newpath"
++}
++
++
++# Install a directory, keeping symlinks as on the original system.
++# Example: if /lib points to /lib64 on the host, "inst_dir /lib/file"
++# will create ${initdir}/lib64, ${initdir}/lib64/file,
++# and a symlink ${initdir}/lib -> lib64.
++inst_dir() {
++    [[ -e ${initdir}/"$1" ]] && return 0  # already there
++
++    local _dir="$1" _part="${1%/*}" _file
++    while [[ "$_part" != "${_part%/*}" ]] && ! [[ -e "${initdir}/${_part}" ]]; do
++        _dir="$_part $_dir"
++        _part=${_part%/*}
++    done
++
++    # iterate over parent directories
++    for _file in $_dir; do
++        [[ -e "${initdir}/$_file" ]] && continue
++        if [[ -L $_file ]]; then
++            inst_symlink "$_file"
++        else
++            # create directory
++            mkdir -m 0755 -p "${initdir}/$_file" || return 1
++            [[ -e "$_file" ]] && chmod --reference="$_file" "${initdir}/$_file"
++            chmod u+w "${initdir}/$_file"
++        fi
++    done
++}
++
++# $1 = file to copy to ramdisk
++# $2 (optional) Name for the file on the ramdisk
++# Location of the image dir is assumed to be $initdir
++# We never overwrite the target if it exists.
++inst_simple() {
++    [[ -f "$1" ]] || return 1
++    strstr "$1" "/" || return 1
++
++    local _src=$1 target="${2:-$1}"
++    if ! [[ -d ${initdir}/$target ]]; then
++        [[ -e ${initdir}/$target ]] && return 0
++        [[ -L ${initdir}/$target ]] && return 0
++        [[ -d "${initdir}/${target%/*}" ]] || inst_dir "${target%/*}"
++    fi
++    # install checksum files also
++    if [[ -e "${_src%/*}/.${_src##*/}.hmac" ]]; then
++        inst "${_src%/*}/.${_src##*/}.hmac" "${target%/*}/.${target##*/}.hmac"
++    fi
++    ddebug "Installing $_src"
++    cp --sparse=always -pfL "$_src" "${initdir}/$target"
++}
++
++# find symlinks linked to given library file
++# $1 = library file
++# Function searches for symlinks by stripping version numbers appended to
++# library filename, checks if it points to the same target and finally
++# prints the list of symlinks to stdout.
++#
++# Example:
++# rev_lib_symlinks libfoo.so.8.1
++# output: libfoo.so.8 libfoo.so
++# (Only if libfoo.so.8 and libfoo.so exists on host system.)
++rev_lib_symlinks() {
++    [[ ! $1 ]] && return 0
++
++    local fn="$1" orig="$(readlink -f "$1")" links=''
++
++    [[ ${fn} =~ .*\.so\..* ]] || return 1
++
++    until [[ ${fn##*.} == so ]]; do
++        fn="${fn%.*}"
++        [[ -L ${fn} && $(readlink -f "${fn}") == ${orig} ]] && links+=" ${fn}"
++    done
++
++    echo "${links}"
++}
++
++# Same as above, but specialized to handle dynamic libraries.
++# It handles making symlinks according to how the original library
++# is referenced.
++inst_library() {
++    local _src="$1" _dest=${2:-$1} _lib _reallib _symlink
++    strstr "$1" "/" || return 1
++    [[ -e $initdir/$_dest ]] && return 0
++    if [[ -L $_src ]]; then
++        # install checksum files also
++        if [[ -e "${_src%/*}/.${_src##*/}.hmac" ]]; then
++            inst "${_src%/*}/.${_src##*/}.hmac" "${_dest%/*}/.${_dest##*/}.hmac"
++        fi
++        _reallib=$(readlink -f "$_src")
++        inst_simple "$_reallib" "$_reallib"
++        inst_dir "${_dest%/*}"
++        [[ -d "${_dest%/*}" ]] && _dest=$(readlink -f "${_dest%/*}")/${_dest##*/}
++        ln -sfn $(convert_abs_rel "${_dest}" "${_reallib}") "${initdir}/${_dest}"
++    else
++        inst_simple "$_src" "$_dest"
++    fi
++
++    # Create additional symlinks.  See rev_symlinks description.
++    for _symlink in $(rev_lib_symlinks $_src) $(rev_lib_symlinks $_reallib); do
++        [[ ! -e $initdir/$_symlink ]] && {
++            ddebug "Creating extra symlink: $_symlink"
++            inst_symlink $_symlink
++        }
++    done
++}
++
++# find a binary.  If we were not passed the full path directly,
++# search in the usual places to find the binary.
++find_binary() {
++    if [[ -z ${1##/*} ]]; then
++        if [[ -x $1 ]] || { strstr "$1" ".so" && ldd $1 &>/dev/null; };  then
++            echo $1
++            return 0
++        fi
++    fi
++
++    type -P $1
++}
++
++# Same as above, but specialized to install binary executables.
++# Install binary executable, and all shared library dependencies, if any.
++inst_binary() {
++    local _bin _target
++    _bin=$(find_binary "$1") || return 1
++    _target=${2:-$_bin}
++    [[ -e $initdir/$_target ]] && return 0
++    [[ -L $_bin ]] && inst_symlink $_bin $_target && return 0
++    local _file _line
++    local _so_regex='([^ ]*/lib[^/]*/[^ ]*\.so[^ ]*)'
++    # I love bash!
++    LC_ALL=C ldd "$_bin" 2>/dev/null | while read _line; do
++        [[ $_line = 'not a dynamic executable' ]] && break
++
++        if [[ $_line =~ $_so_regex ]]; then
++            _file=${BASH_REMATCH[1]}
++            [[ -e ${initdir}/$_file ]] && continue
++            inst_library "$_file"
++            continue
++        fi
++
++        if [[ $_line =~ not\ found ]]; then
++            dfatal "Missing a shared library required by $_bin."
++            dfatal "Run \"ldd $_bin\" to find out what it is."
++            dfatal "$_line"
++            dfatal "dracut cannot create an initrd."
++            exit 1
++        fi
++    done
++    inst_simple "$_bin" "$_target"
++}
++
++# same as above, except for shell scripts.
++# If your shell script does not start with shebang, it is not a shell script.
++inst_script() {
++    local _bin
++    _bin=$(find_binary "$1") || return 1
++    shift
++    local _line _shebang_regex
++    read -r -n 80 _line <"$_bin"
++    # If debug is set, clean unprintable chars to prevent messing up the term
++    [[ $debug ]] && _line=$(echo -n "$_line" | tr -c -d '[:print:][:space:]')
++    _shebang_regex='(#! *)(/[^ ]+).*'
++    [[ $_line =~ $_shebang_regex ]] || return 1
++    inst "${BASH_REMATCH[2]}" && inst_simple "$_bin" "$@"
++}
++
++# same as above, but specialized for symlinks
++inst_symlink() {
++    local _src=$1 _target=${2:-$1} _realsrc
++    strstr "$1" "/" || return 1
++    [[ -L $1 ]] || return 1
++    [[ -L $initdir/$_target ]] && return 0
++    _realsrc=$(readlink -f "$_src")
++    if ! [[ -e $initdir/$_realsrc ]]; then
++        if [[ -d $_realsrc ]]; then
++            inst_dir "$_realsrc"
++        else
++            inst "$_realsrc"
++        fi
++    fi
++    [[ ! -e $initdir/${_target%/*} ]] && inst_dir "${_target%/*}"
++    [[ -d ${_target%/*} ]] && _target=$(readlink -f ${_target%/*})/${_target##*/}
++    ln -sfn $(convert_abs_rel "${_target}" "${_realsrc}") "$initdir/$_target"
++}
++
++# attempt to install any programs specified in a udev rule
++inst_rule_programs() {
++    local _prog _bin
++
++    if grep -qE 'PROGRAM==?"[^ "]+' "$1"; then
++        for _prog in $(grep -E 'PROGRAM==?"[^ "]+' "$1" | sed -r 's/.*PROGRAM==?"([^ "]+).*/\1/'); do
++            if [ -x /lib/udev/$_prog ]; then
++                _bin=/lib/udev/$_prog
++            else
++                _bin=$(find_binary "$_prog") || {
++                    dinfo "Skipping program $_prog using in udev rule $(basename $1) as it cannot be found"
++                    continue;
++                }
++            fi
++
++            #dinfo "Installing $_bin due to it's use in the udev rule $(basename $1)"
++            dracut_install "$_bin"
++        done
++    fi
++}
++
++# udev rules always get installed in the same place, so
++# create a function to install them to make life simpler.
++inst_rules() {
++    local _target=/etc/udev/rules.d _rule _found
++
++    inst_dir "/lib/udev/rules.d"
++    inst_dir "$_target"
++    for _rule in "$@"; do
++        if [ "${rule#/}" = "$rule" ]; then
++            for r in /lib/udev/rules.d /etc/udev/rules.d; do
++                if [[ -f $r/$_rule ]]; then
++                    _found="$r/$_rule"
++                    inst_simple "$_found"
++                    inst_rule_programs "$_found"
++                fi
++            done
++        fi
++        for r in '' ./ $dracutbasedir/rules.d/; do
++            if [[ -f ${r}$_rule ]]; then
++                _found="${r}$_rule"
++                inst_simple "$_found" "$_target/${_found##*/}"
++                inst_rule_programs "$_found"
++            fi
++        done
++        [[ $_found ]] || dinfo "Skipping udev rule: $_rule"
++    done
++}
++
++# general purpose installation function
++# Same args as above.
++inst() {
++    local _x
++
++    case $# in
++        1) ;;
++        2) [[ ! $initdir && -d $2 ]] && export initdir=$2
++            [[ $initdir = $2 ]] && set $1;;
++        3) [[ -z $initdir ]] && export initdir=$2
++            set $1 $3;;
++        *) dfatal "inst only takes 1 or 2 or 3 arguments"
++            exit 1;;
++    esac
++    for _x in inst_symlink inst_script inst_binary inst_simple; do
++        $_x "$@" && return 0
++    done
++    return 1
++}
++
++# install any of listed files
++#
++# If first argument is '-d' and second some destination path, first accessible
++# source is installed into this path, otherwise it will installed in the same
++# path as source.  If none of listed files was installed, function return 1.
++# On first successful installation it returns with 0 status.
++#
++# Example:
++#
++# inst_any -d /bin/foo /bin/bar /bin/baz
++#
++# Lets assume that /bin/baz exists, so it will be installed as /bin/foo in
++# initramfs.
++inst_any() {
++    local to f
++
++    [[ $1 = '-d' ]] && to="$2" && shift 2
++
++    for f in "$@"; do
++        if [[ -e $f ]]; then
++            [[ $to ]] && inst "$f" "$to" && return 0
++            inst "$f" && return 0
++        fi
++    done
++
++    return 1
++}
++
++# dracut_install [-o ] <file> [<file> ... ]
++# Install <file> to the initramfs image
++# -o optionally install the <file> and don't fail, if it is not there
++dracut_install() {
++    local _optional=no
++    if [[ $1 = '-o' ]]; then
++        _optional=yes
++        shift
++    fi
++    while (($# > 0)); do
++        if ! inst "$1" ; then
++            if [[ $_optional = yes ]]; then
++                dinfo "Skipping program $1 as it cannot be found and is" \
++                    "flagged to be optional"
++            else
++                dfatal "Failed to install $1"
++                exit 1
++            fi
++        fi
++        shift
++    done
++}
++
++# Install a single kernel module along with any firmware it may require.
++# $1 = full path to kernel module to install
++install_kmod_with_fw() {
++    # no need to go further if the module is already installed
++
++    [[ -e "${initdir}/lib/modules/$KERNEL_VER/${1##*/lib/modules/$KERNEL_VER/}" ]] \
++        && return 0
++
++    [[ -e "$initdir/.kernelmodseen/${1##*/}" ]] && return 0
++
++    if [[ $omit_drivers ]]; then
++        local _kmod=${1##*/}
++        _kmod=${_kmod%.ko}
++        _kmod=${_kmod/-/_}
++        if [[ "$_kmod" =~ $omit_drivers ]]; then
++            dinfo "Omitting driver $_kmod"
++            return 1
++        fi
++        if [[ "${1##*/lib/modules/$KERNEL_VER/}" =~ $omit_drivers ]]; then
++            dinfo "Omitting driver $_kmod"
++            return 1
++        fi
++    fi
++
++    [ -d "$initdir/.kernelmodseen" ] && \
++        > "$initdir/.kernelmodseen/${1##*/}"
++
++    inst_simple "$1" "/lib/modules/$KERNEL_VER/${1##*/lib/modules/$KERNEL_VER/}" \
++        || return $?
++
++    local _modname=${1##*/} _fwdir _found _fw
++    _modname=${_modname%.ko*}
++    for _fw in $(modinfo -k $KERNEL_VER -F firmware $1 2>/dev/null); do
++        _found=''
++        for _fwdir in $fw_dir; do
++            if [[ -d $_fwdir && -f $_fwdir/$_fw ]]; then
++                inst_simple "$_fwdir/$_fw" "/lib/firmware/$_fw"
++                _found=yes
++            fi
++        done
++        if [[ $_found != yes ]]; then
++            if ! grep -qe "\<${_modname//-/_}\>" /proc/modules; then
++                dinfo "Possible missing firmware \"${_fw}\" for kernel module" \
++                    "\"${_modname}.ko\""
++            else
++                dwarn "Possible missing firmware \"${_fw}\" for kernel module" \
++                    "\"${_modname}.ko\""
++            fi
++        fi
++    done
++    return 0
++}
++
++# Do something with all the dependencies of a kernel module.
++# Note that kernel modules depend on themselves using the technique we use
++# $1 = function to call for each dependency we find
++#      It will be passed the full path to the found kernel module
++# $2 = module to get dependencies for
++# rest of args = arguments to modprobe
++# _fderr specifies FD passed from surrounding scope
++for_each_kmod_dep() {
++    local _func=$1 _kmod=$2 _cmd _modpath _options _found=0
++    shift 2
++    modprobe "$@" --ignore-install --show-depends $_kmod 2>&${_fderr} | (
++        while read _cmd _modpath _options; do
++            [[ $_cmd = insmod ]] || continue
++            $_func ${_modpath} || exit $?
++            _found=1
++        done
++        [[ $_found -eq 0 ]] && exit 1
++        exit 0
++    )
++}
++
++# filter kernel modules to install certain modules that meet specific
++# requirements.
++# $1 = search only in subdirectory of /kernel/$1
++# $2 = function to call with module name to filter.
++#      This function will be passed the full path to the module to test.
++# The behavior of this function can vary depending on whether $hostonly is set.
++# If it is, we will only look at modules that are already in memory.
++# If it is not, we will look at all kernel modules
++# This function returns the full filenames of modules that match $1
++filter_kernel_modules_by_path () (
++    local _modname _filtercmd
++    if ! [[ $hostonly ]]; then
++        _filtercmd='find "$KERNEL_MODS/kernel/$1" "$KERNEL_MODS/extra"'
++        _filtercmd+=' "$KERNEL_MODS/weak-updates" -name "*.ko" -o -name "*.ko.gz"'
++        _filtercmd+=' -o -name "*.ko.xz"'
++        _filtercmd+=' 2>/dev/null'
++    else
++        _filtercmd='cut -d " " -f 1 </proc/modules|xargs modinfo -F filename '
++        _filtercmd+='-k $KERNEL_VER 2>/dev/null'
++    fi
++    for _modname in $(eval $_filtercmd); do
++        case $_modname in
++            *.ko) "$2" "$_modname" && echo "$_modname";;
++            *.ko.gz) gzip -dc "$_modname" > $initdir/$$.ko
++                $2 $initdir/$$.ko && echo "$_modname"
++                rm -f $initdir/$$.ko
++                ;;
++            *.ko.xz) xz -dc "$_modname" > $initdir/$$.ko
++                $2 $initdir/$$.ko && echo "$_modname"
++                rm -f $initdir/$$.ko
++                ;;
++        esac
++    done
++)
++find_kernel_modules_by_path () (
++    if ! [[ $hostonly ]]; then
++        find "$KERNEL_MODS/kernel/$1" "$KERNEL_MODS/extra" "$KERNEL_MODS/weak-updates" \
++          -name "*.ko" -o -name "*.ko.gz" -o -name "*.ko.xz" 2>/dev/null
++    else
++        cut -d " " -f 1 </proc/modules \
++        | xargs modinfo -F filename -k $KERNEL_VER 2>/dev/null
++    fi
++)
++
++filter_kernel_modules () {
++    filter_kernel_modules_by_path  drivers  "$1"
++}
++
++find_kernel_modules () {
++    find_kernel_modules_by_path  drivers
++}
++
++# instmods [-c] <kernel module> [<kernel module> ... ]
++# instmods [-c] <kernel subsystem>
++# install kernel modules along with all their dependencies.
++# <kernel subsystem> can be e.g. "=block" or "=drivers/usb/storage"
++instmods() {
++    [[ $no_kernel = yes ]] && return
++    # called [sub]functions inherit _fderr
++    local _fderr=9
++    local _check=no
++    if [[ $1 = '-c' ]]; then
++        _check=yes
++        shift
++    fi
++
++    function inst1mod() {
++        local _ret=0 _mod="$1"
++        case $_mod in
++            =*)
++                if [ -f $KERNEL_MODS/modules.${_mod#=} ]; then
++                    ( [[ "$_mpargs" ]] && echo $_mpargs
++                      cat "${KERNEL_MODS}/modules.${_mod#=}" ) \
++                    | instmods
++                else
++                    ( [[ "$_mpargs" ]] && echo $_mpargs
++                      find "$KERNEL_MODS" -path "*/${_mod#=}/*" -printf '%f\n' ) \
++                    | instmods
++                fi
++                ;;
++            --*) _mpargs+=" $_mod" ;;
++            i2o_scsi) return ;; # Do not load this diagnostic-only module
++            *)
++                _mod=${_mod##*/}
++                # if we are already installed, skip this module and go on
++                # to the next one.
++                [[ -f "$initdir/.kernelmodseen/${_mod%.ko}.ko" ]] && return
++
++                if [[ $omit_drivers ]] && [[ "$1" =~ $omit_drivers ]]; then
++                    dinfo "Omitting driver ${_mod##$KERNEL_MODS}"
++                    return
++                fi
++                # If we are building a host-specific initramfs and this
++                # module is not already loaded, move on to the next one.
++                [[ $hostonly ]] && ! grep -qe "\<${_mod//-/_}\>" /proc/modules \
++                    && ! echo $add_drivers | grep -qe "\<${_mod}\>" \
++                    && return
++
++                # We use '-d' option in modprobe only if modules prefix path
++                # differs from default '/'.  This allows us to use Dracut with
++                # old version of modprobe which doesn't have '-d' option.
++                local _moddirname=${KERNEL_MODS%%/lib/modules/*}
++                [[ -n ${_moddirname} ]] && _moddirname="-d ${_moddirname}/"
++
++                # ok, load the module, all its dependencies, and any firmware
++                # it may require
++                for_each_kmod_dep install_kmod_with_fw $_mod \
++                    --set-version $KERNEL_VER ${_moddirname} $_mpargs
++                ((_ret+=$?))
++                ;;
++        esac
++        return $_ret
++    }
++
++    function instmods_1() {
++        local _mod _mpargs
++        if (($# == 0)); then  # filenames from stdin
++            while read _mod; do
++                inst1mod "${_mod%.ko*}" || {
++                    if [ "$_check" = "yes" ]; then
++                        dfatal "Failed to install $_mod"
++                        return 1
++                    fi
++                }
++            done
++        fi
++        while (($# > 0)); do  # filenames as arguments
++            inst1mod ${1%.ko*} || {
++                if [ "$_check" = "yes" ]; then
++                    dfatal "Failed to install $1"
++                    return 1
++                fi
++            }
++            shift
++        done
++        return 0
++    }
++
++    local _ret _filter_not_found='FATAL: Module .* not found.'
++    set -o pipefail
++    # Capture all stderr from modprobe to _fderr. We could use {var}>...
++    # redirections, but that would make dracut require bash4 at least.
++    eval "( instmods_1 \"\$@\" ) ${_fderr}>&1" \
++    | while read line; do [[ "$line" =~ $_filter_not_found ]] && echo $line || echo $line >&2 ;done | derror
++    _ret=$?
++    set +o pipefail
++    return $_ret
++}
++
++# inst_libdir_file [-n <pattern>] <file> [<file>...]
++# Install a <file> located on a lib directory to the initramfs image
++# -n <pattern> install non-matching files
++inst_libdir_file() {
++    if [[ "$1" == "-n" ]]; then
++        local _pattern=$1
++        shift 2
++        for _dir in $libdirs; do
++            for _i in "$@"; do
++                for _f in "$_dir"/$_i; do
++                    [[ "$_i" =~ $_pattern ]] || continue
++                    [[ -e "$_i" ]] && dracut_install "$_i"
++                done
++            done
++        done
++    else
++        for _dir in $libdirs; do
++            for _i in "$@"; do
++                for _f in "$_dir"/$_i; do
++                    [[ -e "$_f" ]] && dracut_install "$_f"
++                done
++            done
++        done
++    fi
++}
++
++check_qemu() {
++    command -v qemu-kvm &>/dev/null && [[ -c /dev/kvm ]]
++}
++
++check_nspawn() {
++    [[ -d /sys/fs/cgroup/systemd ]]
++}
++
++
++do_test() {
++    if [[ $UID != "0" ]]; then
++        echo "TEST: $TEST_DESCRIPTION [SKIPPED]: not root" >&2
++        exit 0
++    fi
++
++# Detect lib paths
++    [[ $libdir ]] || for libdir in /lib64 /lib; do
++        [[ -d $libdir ]] && libdirs+=" $libdir" && break
++    done
++
++    [[ $usrlibdir ]] || for usrlibdir in /usr/lib64 /usr/lib; do
++        [[ -d $usrlibdir ]] && libdirs+=" $usrlibdir" && break
++    done
++
++    import_testdir
++
++    while (($# > 0)); do
++        case $1 in
++            --run)
++                echo "TEST RUN: $TEST_DESCRIPTION"
++                test_run
++                ret=$?
++                if [ $ret -eq 0 ]; then
++                    echo "TEST RUN: $TEST_DESCRIPTION [OK]"
++                else
++                    echo "TEST RUN: $TEST_DESCRIPTION [FAILED]"
++                fi
++                exit $ret;;
++            --setup)
++                echo "TEST SETUP: $TEST_DESCRIPTION"
++                test_setup
++                exit $?;;
++            --clean)
++                echo "TEST CLEANUP: $TEST_DESCRIPTION"
++                test_cleanup
++                rm -fr "$TESTDIR"
++                rm -f .testdir
++                exit $?;;
++            --all)
++                echo -n "TEST: $TEST_DESCRIPTION ";
++                (
++                    test_setup && test_run
++                    ret=$?
++                    test_cleanup
++                    rm -fr "$TESTDIR"
++                    rm -f .testdir
++                    exit $ret
++                ) </dev/null >test.log 2>&1
++                ret=$?
++                if [ $ret -eq 0 ]; then
++                    rm test.log
++                    echo "[OK]"
++                else
++                    echo "[FAILED]"
++                    echo "see $(pwd)/test.log"
++                fi
++                exit $ret;;
++            *) break ;;
++        esac
++        shift
++    done
++}
+--- /dev/null
++++ systemd-204/test/testsuite.target
+@@ -0,0 +1,6 @@
++[Unit]
++Description=Testsuite target
++Requires=multi-user.target
++After=multi-user.target
++Conflicts=rescue.target
++AllowIsolate=yes
+--- /dev/null
++++ systemd-204/test/unstoppable.service
+@@ -0,0 +1,5 @@
++[Service]
++Type=oneshot
++RemainAfterExit=yes
++ExecStart=/bin/echo 'I'm unstoppable!'
++ExecStop=/bin/systemctl start --no-block unstoppable.service
+--- systemd-204.orig/tmpfiles.d/legacy.conf
++++ systemd-204/tmpfiles.d/legacy.conf
+@@ -10,7 +10,7 @@
+ # These files are considered legacy and are unnecessary on legacy-free
+ # systems.
+ 
+-d /run/lock 0755 root root -
++d /run/lock 1777 root root -
+ 
+ # /run/lock/subsys is used for serializing SysV service execution, and
+ # hence without use on SysV-less systems.
+@@ -23,7 +23,7 @@ d /run/lock/subsys 0755 root root -
+ # On modern systems a BSD file lock is a better choice if
+ # serialization is needed on those devices.
+ 
+-d /run/lock/lockdev 0775 root lock -
++d /run/lock/lockdev 0775 root root -
+ 
+ # /forcefsck, /fastboot and /forcequotecheck are deprecated in favor of the
+ # kernel command line options 'fsck.mode=force', 'fsck.mode=skip' and
+--- systemd-204.orig/tmpfiles.d/tmp.conf
++++ systemd-204/tmpfiles.d/tmp.conf
+@@ -8,8 +8,8 @@
+ # See tmpfiles.d(5) for details
+ 
+ # Clear tmp directories separately, to make them easier to override
+-d /tmp 1777 root root 10d
+-d /var/tmp 1777 root root 30d
++D /tmp 1777 root root -
++#d /var/tmp 1777 root root 30d
+ 
+ # Exclude namespace mountpoints created with PrivateTmp=yes
+ x /tmp/systemd-private-*
+--- systemd-204.orig/units/remote-fs.target
++++ systemd-204/units/remote-fs.target
+@@ -8,7 +8,7 @@
+ [Unit]
+ Description=Remote File Systems
+ Documentation=man:systemd.special(7)
+-After=remote-fs-pre.target
++After=remote-fs-pre.target local-fs.target
+ 
+ [Install]
+ WantedBy=multi-user.target
+--- systemd-204.orig/units/syslog.socket
++++ systemd-204/units/syslog.socket
+@@ -10,11 +10,14 @@ Description=Syslog Socket
+ Documentation=man:systemd.special(7)
+ Documentation=http://www.freedesktop.org/wiki/Software/systemd/syslog
+ DefaultDependencies=no
+-Before=sockets.target shutdown.target
++Before=sockets.target syslog.target shutdown.target
+ 
+ # Don't allow logging until the very end
+ Conflicts=shutdown.target
+ 
++# Pull in syslog.target to tell people that /dev/log is now accessible
++Wants=syslog.target
++
+ [Socket]
+ ListenDatagram=/run/systemd/journal/syslog
+ SocketMode=0666
+--- /dev/null
++++ systemd-204/units/syslog.target
+@@ -0,0 +1,19 @@
++#  This file is part of systemd.
++#
++#  systemd is free software; you can redistribute it and/or modify it
++#  under the terms of the GNU Lesser General Public License as published by
++#  the Free Software Foundation; either version 2.1 of the License, or
++#  (at your option) any later version.
++
++# This exists mostly for compatibility with SysV/LSB units, and
++# implementations lacking socket/bus activation.
++
++[Unit]
++Description=Syslog
++Documentation=man:systemd.special(7)
++Documentation=http://www.freedesktop.org/wiki/Software/systemd/syslog
++
++# Avoid that we conflict with shutdown.target, so that we can stay
++# until the very end and do not cancel shutdown.target if we should
++# happen to be activated very late.
++DefaultDependencies=no
+--- systemd-204.orig/units/systemd-journald.socket
++++ systemd-204/units/systemd-journald.socket
+@@ -9,7 +9,7 @@
+ Description=Journal Socket
+ Documentation=man:systemd-journald.service(8) man:journald.conf(5)
+ DefaultDependencies=no
+-Before=sockets.target
++Before=sockets.target syslog.target
+ 
+ # Mount and swap units need this. If this socket unit is removed by an
+ # isolate request the mount and and swap units would be removed too,
+--- systemd-204.orig/units/tmp.mount
++++ systemd-204/units/tmp.mount
+@@ -18,3 +18,6 @@ What=tmpfs
+ Where=/tmp
+ Type=tmpfs
+ Options=mode=1777,strictatime
++
++[Install]
++WantedBy=local-fs.target

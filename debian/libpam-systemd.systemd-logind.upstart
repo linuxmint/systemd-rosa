@@ -1,0 +1,35 @@
+description "SystemD login management service"
+
+start on started dbus
+stop on stopping dbus
+
+respawn
+
+env SYSTEMD_LOG_TARGET=syslog
+
+pre-start script
+    # only start if PAM module is actually available, not if libpam-systemd is
+    # removed but not purged
+    ls /lib/*/security/pam_systemd.so >/dev/null 2>&1 || { stop; exit 0; }
+
+    # this is being done by systemd or mountall usually, but not during
+    # upgrades from earlier distro releases
+    if ! mountpoint -q /sys/fs/cgroup; then
+        mount -t tmpfs -o uid=0,gid=0,mode=0755,size=1024 none /sys/fs/cgroup
+    fi
+    mkdir -p /run/systemd
+    # mounting the cgroup does not work in LXC, there it uses cgmanager
+    if [ ! -e /run/container_type ] && ! mountpoint -q /sys/fs/cgroup/systemd; then
+        mkdir -p /sys/fs/cgroup/systemd
+        mount -t cgroup -o nosuid,noexec,nodev,none,name=systemd systemd /sys/fs/cgroup/systemd
+    fi
+end script
+
+script
+    # Don't use the limit stanza as failure to set the limit (unprivileged
+    # containers for example) causes a complete failure to start the job.
+    ulimit -S -n 16384 || true
+    ulimit -H -n 16384 || true
+
+    exec /lib/systemd/systemd-logind
+end script

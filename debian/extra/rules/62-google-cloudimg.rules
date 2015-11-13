@@ -1,0 +1,3 @@
+# Use NOOP as the default scheduler on Google clouds for better performance
+SUBSYSTEM=="block", ACTION=="add|change", ENV{ID_VENDOR}=="*Google*", ENV{ID_PATH}=="*virtio-pci*", ATTR{queue/scheduler}="noop"
+

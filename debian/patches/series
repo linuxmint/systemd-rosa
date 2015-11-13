@@ -1,0 +1,30 @@
+# debian/source/git-patches exported from git by export-hook
+v204..upstream-fixes_204-5
+debian-changes
+
+# cherrypicked from upstream trunk
+upstream-hwdb-keyboard.patch
+upstream-hwdb-updates.patch
+upstream-reboot-polkit-permissions.patch
+upstream-ignore-mmcrpmb.patch
+
+# rejected upstream
+env-variable-for-machine-ID-path.patch
+persistent-storage-rule-mmc-partname.patch
+
+# Ubuntu specific
+login-monitor-no-machine.patch
+disable-failing-buildd-tests.patch
+block-polling.patch
+fix-race-condition-of-serio-driver-module-not-loading.patch
+load-fbcon.patch
+load-modules-for-bound-devices.patch
+support-phablet-etc-writable.patch
+ignore-omap-vsync.patch
+pam-check-runtime-dir-user.patch
+ubuntu-logind-controllers.patch
+fix-ftbfs.patch
+
+add-cgmanager-support
+Advertise-hibernation-only-if-there-s-enough-free-sw.patch
+ProLiant-power-button.patch

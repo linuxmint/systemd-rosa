@@ -1,0 +1,229 @@
+#! /usr/bin/make -f
+
+#export DH_VERBOSE=1
+#export DEB_BUILD_OPTIONS="nostrip"
+
+VERSION = $(shell dpkg-parsechangelog | sed -n -e '/^Version:/s/.*: //p')
+
+# Ubuntu: systemd{,-sysv} not yet approved for universe
+BINARY_BLACKLIST = -Nsystemd -Nsystemd-sysv
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+CONFFLAGS = \
+	--with-rootprefix= \
+	--with-rootlibdir=/lib/$(DEB_HOST_MULTIARCH) \
+	--with-sysvinit-path=/etc/init.d \
+	--with-sysvrcnd-path=/etc \
+	--with-firmware-path=/lib/firmware \
+	--with-debug-shell=/bin/bash \
+	--enable-libcryptsetup \
+	--enable-tcpwrap \
+	--disable-coredump \
+	--disable-efi \
+	--disable-myhostname \
+	--disable-keymap \
+	--disable-vconsole \
+	--disable-silent-rules
+
+CONFFLAGS_deb = \
+	--enable-selinux \
+	--enable-introspection \
+	--enable-gtk-doc
+
+CONFFLAGS_udeb = \
+	--disable-cgmanager \
+	--disable-selinux \
+	--disable-introspection \
+	--disable-gtk-doc \
+	--disable-binfmt \
+	--disable-readahead \
+	--disable-bootchart \
+	--disable-quotacheck \
+	--disable-randomseed \
+	--disable-logind \
+	--disable-hostnamed \
+	--disable-timedated \
+	--disable-localed \
+	--disable-polkit \
+	--disable-acl \
+	--disable-xattr \
+	--disable-gudev \
+	--disable-manpages \
+	--without-python
+
+override_dh_auto_configure:
+	dh_auto_configure --builddirectory=build-deb \
+		-- $(CONFFLAGS) $(CONFFLAGS_deb)
+	dh_auto_configure --builddirectory=build-udeb \
+		-- $(CONFFLAGS) $(CONFFLAGS_udeb)
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=build-deb
+	dh_auto_build --builddirectory=build-udeb
+
+override_dh_auto_install:
+	dh_auto_install --builddirectory=build-deb \
+		--destdir=debian/install/deb
+	dh_auto_install --builddirectory=build-udeb \
+		--destdir=debian/install/udeb
+
+override_dh_auto_clean:
+	dh_auto_clean --builddirectory=build-deb
+	dh_auto_clean --builddirectory=build-udeb
+	rm -rf debian/install/
+	# remove pre-generated man pages so they are rebuilt
+	rm -f man/*.[13578]
+	# remove Python byte code files
+	rm -f *.pyc
+
+override_dh_install:
+	# remove unnecessary / unused files
+	rm -f debian/install/*/usr/share/doc/systemd/LICENSE.*
+	rm -f debian/install/*/var/log/README
+	rm -f debian/install/*/etc/init.d/README
+	rm -f debian/install/*/usr/share/man/man8/kernel-install.8
+	rm -rf debian/install/*/etc/rpm/
+	rm -rf debian/install/*/etc/kernel/
+	find debian/install/ -name '*.la' -delete
+	dh_install -pudev-udeb -plibudev1-udeb --sourcedir=debian/install/udeb
+	dh_install -Nudev-udeb -Nlibudev1-udeb --sourcedir=debian/install/deb --list-missing
+	# install some files manually, --sourcedir makes that necessary
+	# udev-udeb
+	install -D --mode=755 debian/extra/udev.startup \
+		debian/udev-udeb/lib/debian-installer/start-udev
+	install -D --mode=755 debian/extra/udev.base-installer \
+		debian/udev-udeb/usr/lib/base-installer.d/05udev
+	mkdir -p debian/udev-udeb/lib/udev/rules.d/
+	mkdir -p debian/udev-udeb/lib/udev
+	install -D --mode=644 \
+		debian/extra/hotplug.functions \
+		debian/extra/rule_generator.functions \
+		debian/udev-udeb/lib/udev/
+	install -D --mode=755 \
+		debian/extra/write_net_rules \
+		debian/udev-udeb/lib/udev/
+	# udev: initramfs-tools support
+	install -D --mode=755 debian/extra/initramfs.hook \
+		debian/udev/usr/share/initramfs-tools/hooks/udev
+	install -D --mode=755 debian/extra/initramfs.top \
+		debian/udev/usr/share/initramfs-tools/scripts/init-top/udev
+	install -D --mode=755 debian/extra/initramfs.bottom \
+		debian/udev/usr/share/initramfs-tools/scripts/init-bottom/udev
+	# udev: debian specific rules and helpers
+	install -D --mode=644 debian/extra/rules/* \
+		debian/udev/lib/udev/rules.d/
+	install -D --mode=644 debian/extra/fbdev-blacklist.conf \
+		debian/udev/etc/modprobe.d/fbdev-blacklist.conf
+	install -D --mode=644 \
+		debian/extra/hotplug.functions \
+		debian/extra/rule_generator.functions \
+		debian/udev/lib/udev/
+	install -D --mode=755 \
+		debian/extra/write_net_rules \
+		debian/udev/lib/udev/
+	# udev rules documentation
+	install -m 644 -o root -g root debian/extra/README-etc-rules.d \
+		debian/udev/etc/udev/rules.d/README
+	install -m 644 -o root -g root debian/extra/README-lib-rules.d \
+		debian/udev/lib/udev/rules.d/README
+	# systemd
+	cp -a debian/pam-configs debian/libpam-systemd/usr/share/
+	install -D --mode=644 debian/init-functions.d/40-systemd \
+		debian/systemd/lib/lsb/init-functions.d/40-systemd
+	install --mode=644 debian/tmpfiles.d/debian.conf \
+		debian/systemd/usr/lib/tmpfiles.d/
+	install --mode=644 debian/debian-fixup.service debian/ifup@.service \
+		debian/units/run-lock.mount debian/units/run-user.mount \
+		debian/systemd/lib/systemd/system/
+	install --mode=755 debian/debian-fixup \
+		debian/systemd/lib/systemd/
+	install --mode=755 debian/systemd-logind-launch \
+		debian/systemd/lib/systemd/
+	# Remove tmp.mount symlink to avoid mounting /tmp as tmpfs by default.
+	rm debian/systemd/lib/systemd/system/local-fs.target.wants/tmp.mount
+	# remove duplicates
+	# files shipped by systemd-sysv / sysvinit
+	rm debian/systemd/usr/share/man/man1/init.1
+	rm debian/systemd/usr/share/man/man8/halt.8
+	rm debian/systemd/usr/share/man/man8/poweroff.8
+	rm debian/systemd/usr/share/man/man8/reboot.8
+	rm debian/systemd/usr/share/man/man8/shutdown.8
+	rm debian/systemd/usr/share/man/man8/telinit.8
+	rm debian/systemd/usr/share/man/man8/runlevel.8
+	# files shipped by libpam-systemd
+	rm debian/systemd/usr/share/man/man8/pam_systemd.8
+	# files shipped by udev
+	rm -r debian/systemd/etc/udev/
+	rm debian/systemd/lib/systemd/system/systemd-udev*
+	rm debian/systemd/lib/systemd/system/*.target.wants/systemd-udev*
+	rm debian/systemd/lib/systemd/systemd-udevd
+	rm debian/systemd/usr/share/man/man7/udev.7
+	rm debian/systemd/usr/share/man/man8/*udev*.8
+	# files systemd by cryptsetup
+	rm debian/systemd/usr/share/man/man5/crypttab.5
+	# files shipped by systemd-services
+	rm debian/systemd/etc/systemd/logind.conf
+	rm debian/systemd/lib/systemd/systemd-logind
+	rm debian/systemd/lib/systemd/systemd-hostnamed
+	rm debian/systemd/lib/systemd/systemd-localed
+	rm debian/systemd/lib/systemd/systemd-timedated
+	rm debian/systemd/usr/share/man/man5/logind*
+	rm debian/systemd/usr/share/man/man8/systemd-logind*
+	rm debian/systemd/usr/share/man/man8/systemd-hostnamed*
+	rm debian/systemd/usr/share/man/man8/systemd-localed*
+	rm debian/systemd/usr/share/man/man8/systemd-timedated*
+	rm debian/udev/lib/udev/rules.d/70-uaccess.rules
+	rm debian/udev/lib/udev/rules.d/73-seat-late.rules
+	rm debian/udev/lib/udev/rules.d/71-seat.rules
+	# files shipped by systemd
+	rm debian/udev/lib/udev/rules.d/99-systemd.rules
+
+	# we continue to use the old net iface naming schema for the time being
+	rm -f debian/udev/lib/udev/rules.d/80-net-name-slot.rules
+	rm -f debian/udev-udeb/lib/udev/rules.d/80-net-name-slot.rules
+
+override_dh_installinit:
+	dh_installinit --upstart-only --no-start
+	dh_installinit --upstart-only --name=udev-finish --no-start
+	dh_installinit --upstart-only --name=udevtrigger --no-start
+	dh_installinit --upstart-only --name=udevmonitor --no-start
+	dh_installinit --upstart-only --name=udev-fallback-graphics --no-start
+	dh_installinit --upstart-only --name systemd-logind
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibudev1 --add-udeb=libudev1-udeb
+	dh_makeshlibs --remaining-packages
+
+autoreconf:
+	gtkdocize --copy --docdir docs/
+	intltoolize -f -c
+	autoreconf -f -i
+
+override_dh_autoreconf:
+	dh_autoreconf debian/rules -- autoreconf
+
+override_dh_auto_test:
+ifeq (, $(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	# some tests hang under fakeroot, so disable fakeroot
+	echo "01234567890123456789012345678901" > build-deb/machine-id
+	env -u LD_PRELOAD SYSTEMD_MACHINE_ID_PATH=$(CURDIR)/build-deb/machine-id \
+		make -C build-deb check || ( \
+		cd build-deb; \
+		for f in test-*.log; do echo "==== $$f ===="; cat $$f; done; \
+		exit 1; )
+endif
+
+%:
+	dh $@ --with autoreconf,gir,python2
+
+override_dh_gencontrol:
+	# Ubuntu has an epoch on gudev
+	dh_gencontrol -plibgudev-1.0-0 -plibgudev-1.0-dev -pgir1.2-gudev-1.0 -- "-v1:$(VERSION)"
+	dh_gencontrol $(BINARY_BLACKLIST) --remaining-packages
+
+override_dh_strip:
+	dh_strip $(BINARY_BLACKLIST)
+
+override_dh_builddeb:
+	dh_builddeb $(BINARY_BLACKLIST)
